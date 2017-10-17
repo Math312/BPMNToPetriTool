@@ -13,10 +13,10 @@ import ynu.edu.data.BPMN.BPMNData;
 import ynu.edu.module.bpmn.BpmnElement;
 import ynu.edu.module.bpmn.Choreography;
 import ynu.edu.module.bpmn.CommonElement;
-import ynu.edu.module.bpmn.ComplrxGateway;
+import ynu.edu.module.bpmn.EventBasedGateway;
 import ynu.edu.module.bpmn.EndEvent;
 import ynu.edu.module.bpmn.ExclusiveGateway;
-import ynu.edu.module.bpmn.GateElement;
+import ynu.edu.module.bpmn.ArrayElement;
 import ynu.edu.module.bpmn.ParallelGateway;
 import ynu.edu.module.bpmn.SequenceFlow;
 import ynu.edu.module.bpmn.StartEvent;
@@ -89,7 +89,7 @@ public BPMNData getNodes(final Element node,BPMNData bpmnData) {
     }
    //判断网关类型并存储
     else if("exclusiveGateway".equals(node.getName())){
-    	GateElement bpmnElement=null;
+    	ArrayElement bpmnElement=null;
      	String nodename=null;
     	String id = null;
     	ArrayList<String> incoming = new ArrayList<>();
@@ -118,7 +118,7 @@ public BPMNData getNodes(final Element node,BPMNData bpmnData) {
        }
     }  
     if("Complrx Gateway".equals(nodename)){
-     bpmnElement=new ComplrxGateway(id);
+     bpmnElement=new EventBasedGateway(id);
     
     }else if("Exclusive Gateway".equals(nodename)){
     	 bpmnElement=new ExclusiveGateway(id);
