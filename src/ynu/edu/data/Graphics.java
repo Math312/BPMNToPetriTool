@@ -112,6 +112,29 @@ public class Graphics <T extends GNode> {
    			this.addNode(oneNode);
    		}
    	}
+   	
+   	for(Entry<String, LinkedList<T>> e : sourceSet) 
+   	{
+   		LinkedList<T> list = e.getValue();
+   		for(T oneNode:list) 
+   		{
+   			BpmnElement element = (BpmnElement)oneNode;
+   			String inComing = element.getInComing();
+   			String outGoing = element.getOutGoing();
+   			String id = element.id;
+   			String[] inComingArray = inComing.split("|");
+   			String[] outGoingArray = outGoing.split("|");
+   			for(int i = 0;i < inComingArray.length;i ++) 
+   			{
+   				addLink(inComingArray[i],id);
+   			}
+   			
+   			for(int i = 0;i < outGoingArray.length;i ++) 
+   			{
+   				addLink(id,outGoingArray[i]);
+   			}
+   		}
+   	}
    }
    
    //===========================================================================================//

@@ -1,24 +1,24 @@
 /***********************************************************************
- * Module:  ParallelGateway.java
+ * Module:  ComplrxGateway.java
  * Author:  邵闫利
- * Purpose: Defines the Class ParallelGateway
+ * Purpose: Defines the Class ComplrxGateway
  ***********************************************************************/
 
 package ynu.edu.module.bpmn;
 
 import java.util.*;
 
-/** @pdOid 4e89ccaf-b71a-4a39-ae25-a5c0cc77138e */
-public class ParallelGateway extends ArrayElement {
+/** @pdOid ad46f155-adf2-4aba-821d-ba4837f3066d */
+public class EventBasedGateway extends ArrayElement {
    /** @param id
-    * @pdOid 26caa8d9-997b-487a-b345-6b26a9cf2ee3 */
-   public ParallelGateway(String id) {
+    * @pdOid 07e08c98-1d16-4fc2-a31a-d985a4c6491b */
+   public EventBasedGateway(String id) {
     super.id = id;
     super.inComing = new ArrayList<String>();
     super.outGoing = new ArrayList<String>();
    }
    
-   /** @pdOid 58211a5e-1d30-4d4b-8429-73f30f3942cc */
+   /** @pdOid a4f51db7-e238-4e83-be6f-f30991ea4743 */
    public String toString() {
     StringBuilder sb = new StringBuilder("Type:"+this.getClass().getName()+"\n id: "+id+"\n inComing: \n"); 
     int i  = 1;

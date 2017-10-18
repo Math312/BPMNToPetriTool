@@ -9,7 +9,7 @@ package ynu.edu.module.bpmn;
 import java.util.*;
 
 /** @pdOid 4faaa77c-8534-4b62-bf35-3ad9eefd592e */
-public class ExclusiveGateway extends GateElement {
+public class ExclusiveGateway extends ArrayElement {
    /** @param id
     * @pdOid 86674916-7b7a-4e6f-a7c9-ad29e3dc5567 */
    public ExclusiveGateway(String id) {

@@ -9,17 +9,17 @@ package ynu.edu.module.bpmn;
 import java.util.*;
 
 /** @pdOid a4f9d16f-649c-4846-a3fd-9dfcc1209797 */
-public class StartEvent extends CommonElement {
+public class StartEvent extends ArrayElement {
    /** 设置name为start，inComing参数为null
     * 
     * @param id 
     * @param outGoing
     * @pdOid 3ebfd12a-6802-43da-af54-ba505bd9fe45 */
-   public StartEvent(String id, String outGoing) {
+   public StartEvent(String id) {
     super.name = "start";
     super.inComing = null;
     super.id = id;
-    super.outGoing = outGoing;
+    super.outGoing = new ArrayList<String>();
    }
    
    /** @pdOid a894a427-464b-43fe-b81b-377cd35b5661 */
