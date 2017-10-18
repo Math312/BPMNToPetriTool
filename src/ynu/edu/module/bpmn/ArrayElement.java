@@ -86,5 +86,29 @@ public abstract class ArrayElement extends BpmnElement {
    public String getId() {
    	return id;
    }
+   @Override
+   public String toString() {
+	    StringBuilder sb = new StringBuilder("Type:"+this.getClass().getName()+"\n id: "+id+"\n inComing: \n"); 
+	    if(inComing != null && inComing.size()!=0){
+	    int i  = 1;
+	    for(String data:inComing) 
+	    {
+	     sb.append("inComing"+i+": "+data+"\n");
+	     i ++;
+	    }
+	    }
+	    
+	    sb.append("outGoing: \n");
+	    if(outGoing != null &&outGoing.size()!=0){
+	    int j = 1;
+	    for(String data:outGoing) 
+	    {
+	     sb.append("outGoing"+j+": "+data+"\n");
+	     j ++;
+	    }
+	    }
+	    return sb.toString();
+	    
+	   }
 
 }
