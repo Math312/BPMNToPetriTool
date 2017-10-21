@@ -254,7 +254,7 @@ public class Graphics <T extends GNode> {
    //获取节点信息
    
    
-   private <T extends GNode> GNode getNodeData(String id) {
+   public <T extends GNode> GNode getNodeData(String id) {
 	   	for(Entry<String, LinkedList<HeadNode<? extends GNode>>> e:this.data.entrySet()) 
 	   	{
 	   		for(HeadNode<? extends GNode> headNode : e.getValue()) 
