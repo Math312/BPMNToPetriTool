@@ -7,35 +7,59 @@ import ynu.edu.data.Graphics;
 import ynu.edu.module.bpmn.BpmnElement;
 import ynu.edu.module.bpmn.EndEvent;
 import ynu.edu.module.bpmn.ExclusiveGateway;
+import ynu.edu.module.bpmn.ParallelGateway;
+import ynu.edu.module.bpmn.SequenceFlow;
+import ynu.edu.module.bpmn.StartEvent;
 
 public class TransformRuleTwo extends AbstractRule{
 	
 	public TransformRuleTwo(Graphics g){
-		this.g = g;
+		this.graphics = g;
 	}
 	
 	
-	Graphics g;
+	Graphics graphics;
 	String endId;//结束事件的ID
-	String two[] = g.getIDbyNode(endId)[1];//存储开始事件之后结点的ID
-	ExclusiveGateway e = new ExclusiveGateway("two");//new一个并行网关
-	Hashtable<String,LinkedList<String>> h = g.getIds();
-
+	String IDbyEnd[];//存储开始事件之前结点的ID
+	ExclusiveGateway exclusiveGateway ;//new一个并行网关
+	Hashtable<String,LinkedList<String>> allID ;
+	EndEvent endEvent ;
+	
+	
+	//============================================================================//
+	//删除结束事件、并新增一个结束事件、并行网关、序列流
 	@Override
 	protected Graphics<BpmnElement> split(Graphics<BpmnElement> graphics) {
-		if(two.length > 2)
+		IDbyEnd = graphics.getIDbyNode(endId)[1];	
+		allID = graphics.getIds();
+		
+		
+		if(IDbyEnd.length > 1)
 		{
-			endId = h.get("EndEvent").getFirst();//To Do
-			g.removeNode(endId);
-			g.addNode(e);
+			endId = allID.get("EndEvent").getFirst();//To Do
+			graphics.removeNode(endId);	
+			
+			endEvent = new EndEvent(Flag.getID());
+			exclusiveGateway = new ExclusiveGateway(Flag.getID());
+			graphics.addNode(exclusiveGateway);
+			
+			SequenceFlow sflow = new SequenceFlow(Flag.getID(), exclusiveGateway.getId(), "EndEvent");
+			
+			graphics.addNode(endEvent);
+			graphics.addLink(sflow.getId(),endId);
+			graphics.addNode(sflow);
 		}
+	
+		
 		return null;
 	}
-	EndEvent end = new EndEvent("endId", e.getId());//新增一个结束事件的结点
+	
+	//===================================================================//
+	//建立并行网关和之前的连接结束事件的结点的联系
 	@Override
 	public boolean matches(Graphics<BpmnElement> graphics) {
-		for (int i = 0; i < two.length; i++){
-			if (g.addLink(two[i], e.getId()) == false){
+		for (int i = 0; i < IDbyEnd.length; i++){
+			if (graphics.addLink(IDbyEnd[i], exclusiveGateway.getId()) == false){
 				return false;
 			}
 		}

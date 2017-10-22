@@ -12,38 +12,55 @@ import ynu.edu.module.bpmn.StartEvent;
 
 public class TransformRuleOne extends AbstractRule{
 	public TransformRuleOne(Graphics g){
-		this.g = g;
+		this.graphics = g;
 	}
 	
-	Graphics g;
+	Graphics graphics;
 	String startId;//开始事件的ID
-	String one[] = g.getIDbyNode(startId)[0];//存储开始事件之后结点的ID
-	ParallelGateway p = new ParallelGateway("one");//new一个并行网关
-	Hashtable<String,LinkedList<String>> h = g.getIds();
+	String idByStart[] ;//存储开始事件之后结点的ID
+	ParallelGateway parallelGateway ;//new一个并行网关
+	Hashtable<String,LinkedList<String>> allIds = graphics.getIds();
 	//SequenceFlow sequenceFlow = new SequenceFlow("");
+	StartEvent startEvent; 
 	
+	//删除开始事件，并新增一个开始事件、平行网关、序列流
 	protected Graphics<BpmnElement> split(Graphics<BpmnElement> graphics) {
-		
-		if(one.length > 1)
+		startId = allIds.get("StartEvent").getFirst();//To Do得到开始事件的ID
+		idByStart = graphics.getIDbyNode(startId)[0];//得到开始事件之后的id
+		if(idByStart.length > 1)
 		{
-			startId = h.get("StartEvent").getFirst();//To Do
-			g.removeNode(startId);
-			g.addNode(p);
+			graphics.removeNode(startId);
+
+			startEvent = new StartEvent("startId");  //新增一个开始事件
+			graphics.addNode(startEvent);
 			
+			parallelGateway = new ParallelGateway(Flag.getID());
+			graphics.addNode(parallelGateway);  //增加一个平行网关
+			
+			SequenceFlow flow = new SequenceFlow(Flag.getID(),startId,parallelGateway.getId());
+			graphics.addNode(flow);
+			
+			graphics.addLink(startId, flow.getId());
 		}
+		
+		
+		
 		return null;
 	}
 	
-	StartEvent start = new StartEvent("startId", p.getId());//新增一个开始事件
-	@Override
+	
+	
+	//让新增的结点之间建立联系
 	public boolean matches(Graphics<BpmnElement> graphics) {
-		for (int i = 0; i < one.length; i++){
-			if (g.addLink(p.getId(), one[i]) == false){
+		for (int i = 0; i < idByStart.length; i++){
+			if (graphics.addLink(parallelGateway.getId(), idByStart[i]) == false){
 				return false;
 			}
 		}
 		return true;
 	}
+	
+	
 
 	@Override
 	public Graphics<BpmnElement> transfer(Graphics<BpmnElement> graphics) {

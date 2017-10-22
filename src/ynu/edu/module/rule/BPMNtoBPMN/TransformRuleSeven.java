@@ -5,12 +5,14 @@ import java.util.LinkedList;
 
 import ynu.edu.data.Graphics;
 import ynu.edu.module.bpmn.BpmnElement;
+import ynu.edu.module.bpmn.Choreography;
 import ynu.edu.module.bpmn.ParallelGateway;
+import ynu.edu.module.bpmn.SequenceFlow;
 
 public class TransformRuleSeven extends AbstractRule{
 	
-	Graphics g;
-	Hashtable<String,LinkedList<String>> h = g.getIds();
+	Graphics graphics;
+	Hashtable<String,LinkedList<String>> allID = graphics.getIds();
 	String [] allParallelGatewayID;
 	String [] allExclusiveGatewayID;
 	String [][] IDbyNode ;
@@ -20,47 +22,69 @@ public class TransformRuleSeven extends AbstractRule{
 	protected Graphics<BpmnElement> split(Graphics<BpmnElement> graphics) {
 		// TODO Auto-generated method stub
 		
-		allParallelGatewayID = h.get("parallelGateway").toArray(new String[h.get("parallelGateway").size()]);
-		allExclusiveGatewayID = h.get("exclusiveGateway").toArray(new String[h.get("exclusiveGateway").size()]);
+		allParallelGatewayID = allID.get("parallelGateway").toArray(new String[allID.get("parallelGateway").size()]);
+		allExclusiveGatewayID = allID.get("exclusiveGateway").toArray(new String[allID.get("exclusiveGateway").size()]);
 		
-		
+		// 假设第一个网关是平行网关
+		//满足规则七后删除中间的序列流及联系
 		for (int i = 0 ; i < allParallelGatewayID.length; i++)
 		{
 			
-			IDbyNode = g.getIDbyNode(allParallelGatewayID[i]);
+			IDbyNode = graphics.getIDbyNode(allParallelGatewayID[i]);
+			String tempID = graphics.getIDbyNode(IDbyNode[0][0])[0][0];
 			for(int j = 0;i<allParallelGatewayID.length; j++)
 			{
-				if(g.getIDbyNode(IDbyNode[0][0])[0][0]==allParallelGatewayID[j])  //取当前网关的下一个的下一个元素是不是网关
+				if(graphics.getIDbyNode(IDbyNode[0][0])[0][0]==allParallelGatewayID[j])  //取当前网关的下一个的下一个元素是不是网关
 					flag1=true;
 			}
 			for(int j = 0;i<allExclusiveGatewayID.length; j++)
 			{
-				if(g.getIDbyNode(IDbyNode[0][0])[0][0]==allExclusiveGatewayID[j])
+				if(graphics.getIDbyNode(IDbyNode[0][0])[0][0]==allExclusiveGatewayID[j])
 					flag2=true;
 			}
 			if(flag1||flag2)
 			{
-				g.removeNode(IDbyNode[0][0]);
+				graphics.removeNode(IDbyNode[0][0]); //删除序列流
 				
 				
+				Choreography choreography = new Choreography(Flag.getID(), "choreography", null, null);
+				SequenceFlow sequenceFlow1 =new SequenceFlow(Flag.getID(), allParallelGatewayID[i], choreography.getId());
+				SequenceFlow sequenceFlow2 =new SequenceFlow(Flag.getID(), choreography.getId(), tempID);
 				
-				
-			}
-			g.removeNode(allParallelGatewayID[i]);
-			ParallelGateway p = new ParallelGateway("one");//new一个并行网关
-			ParallelGateway p1 = new ParallelGateway("two");//new一个并行网关
-			if(IDbyNode[0].length<2 || IDbyNode[0].length<2)
-			{
-				continue;
-			}
+				graphics.addNode(choreography);
+				graphics.addNode(sequenceFlow1);
+				graphics.addNode(sequenceFlow2);
+			}			
+		}
+		// 假设第一个网关是排他网关
+		//满足规则七后删除中间的序列流及联系
+		for (int i = 0 ; i < allExclusiveGatewayID.length; i++)
+		{
 			
-			for (int j = 0; j < IDbyNode[1].length; j++){
-				g.addLink(IDbyNode[1][j],p.getId()) ;
+			IDbyNode = graphics.getIDbyNode(allExclusiveGatewayID[i]);
+			String tempID = graphics.getIDbyNode(IDbyNode[0][0])[0][0];
+			for(int j = 0;i<allParallelGatewayID.length; j++)
+			{
+				if(graphics.getIDbyNode(IDbyNode[0][0])[0][0]==allParallelGatewayID[j])  //取当前网关的下一个的下一个元素是不是网关
+					flag1=true;
 			}
-			for (int j = 0; j < IDbyNode[0].length; j++){
-				g.addLink(p1.getId(), IDbyNode[0][j]);
+			for(int j = 0;i<allExclusiveGatewayID.length; j++)
+			{
+				if(graphics.getIDbyNode(IDbyNode[0][0])[0][0]==allExclusiveGatewayID[j])
+					flag2=true;
 			}
-			g.addLink(p.getId(), p1.getId());
+			if(flag1||flag2)
+			{
+				graphics.removeNode(IDbyNode[0][0]); //删除序列流
+				
+				
+				Choreography choreography = new Choreography(Flag.getID(), "choreography", null, null);
+				SequenceFlow sequenceFlow1 =new SequenceFlow(Flag.getID(), allExclusiveGatewayID[i], choreography.getId());
+				SequenceFlow sequenceFlow2 =new SequenceFlow(Flag.getID(), choreography.getId(), tempID);
+				graphics.addNode(choreography);
+				graphics.addNode(sequenceFlow1);
+				graphics.addNode(sequenceFlow2);
+			}			
 		}
 		return null;
 	}
