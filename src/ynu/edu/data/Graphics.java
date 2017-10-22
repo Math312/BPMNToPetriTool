@@ -77,6 +77,9 @@ public class Graphics <T extends GNode> {
 	   }
 	   
 	   String[][] result = new String[2][];
+	   result[0] = new String[nextList.size()];
+	   result[1] = new String[preList.size()];
+	   
 	   nextList.toArray(result[0]);
 	   preList.toArray(result[1]);
 	   return result;
@@ -122,17 +125,17 @@ public class Graphics <T extends GNode> {
    			String inComing = element.getInComing();
    			String outGoing = element.getOutGoing();
    			String id = element.id;
-   			String[] inComingArray = inComing.split("|");
-   			String[] outGoingArray = outGoing.split("|");
+   			String[] inComingArray = inComing.split("\\|");
+   			String[] outGoingArray = outGoing.split("\\|");
    			for(int i = 0;i < inComingArray.length;i ++) 
    			{
    				addLink(inComingArray[i],id);
    			}
    			
-   			for(int i = 0;i < outGoingArray.length;i ++) 
-   			{
-   				addLink(id,outGoingArray[i]);
-   			}
+//   			for(int i = 0;i < outGoingArray.length;i ++) 
+//   			{
+//   				addLink(id,outGoingArray[i]);
+//   			}
    		}
    	}
    }
@@ -308,7 +311,7 @@ public class Graphics <T extends GNode> {
 	   {
 		   Node nextPreNode = nextNode;
 		   nextNode = nextNode.next;
-		   while(nextNode.next != null) 
+		   while(nextNode != null) 
 		   {
 			   if(nextNode.id.equals(id)) 
 			   {
@@ -334,7 +337,7 @@ public class Graphics <T extends GNode> {
 	   {
 		   Node nextPreNode = nextNode;
 		   nextNode = nextNode.next;
-		   while(nextNode.next != null) 
+		   while(nextNode != null) 
 		   {
 			   if(nextNode.id.equals(id)) 
 			   {
@@ -357,7 +360,7 @@ public class Graphics <T extends GNode> {
    private boolean deleteNodeCheckLinkedList(HeadNode<? extends GNode> head) 
    {
 	   Node nextNode = head.next;
-	   while(nextNode.next != null) 
+	   while(nextNode != null) 
 	   {
 		   String id = nextNode.id;
 		   String type = nextNode.type;
@@ -366,14 +369,15 @@ public class Graphics <T extends GNode> {
 		   {
 			   if(headNode.data.id.equals(id)) 
 			   {
-				   this.deleteNodeInHeadNode(head, head.data.id);
+				   this.deleteNodeInHeadNode(getNode(id), head.data.id);
 			   }
 		   }
+		   nextNode = nextNode.next;
 	   
 	   }
 	   
 	   nextNode = head.pre;
-	   while(nextNode.next != null) 
+	   while(nextNode != null) 
 	   {
 		   String id = nextNode.id;
 		   String type = nextNode.type;
@@ -382,9 +386,10 @@ public class Graphics <T extends GNode> {
 		   {
 			   if(headNode.data.id.equals(id)) 
 			   {
-				   this.deleteNodeInHeadNode(head, head.data.id);
+				   this.deleteNodeInHeadNode(getNode(id), head.data.id);
 			   }
 		   }
+		   nextNode = nextNode.next;
 	   }
 	   
 	   return true;
@@ -441,7 +446,7 @@ public class Graphics <T extends GNode> {
       /** @param node
        * @pdOid 3cb9c32e-c7c3-4296-8b96-d0a410cb86d3 */
       public Node(HeadNode<? extends GNode> node) {
-      	type = node.getClass().getName();
+      	type = node.data.getClass().getName();
       	id = node.getData().id;
       	next = null;
       }

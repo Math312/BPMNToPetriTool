@@ -1,6 +1,7 @@
 package ynu.edu.util.analyze;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.dom4j.Attribute;
@@ -9,6 +10,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import ynu.edu.data.Graphics;
 import ynu.edu.data.BPMN.BPMNData;
 import ynu.edu.module.bpmn.BpmnElement;
 import ynu.edu.module.bpmn.Choreography;
@@ -31,10 +33,12 @@ public class AnalyzeTool {
 	}
 
 	void AnalyzeBpmn() throws DocumentException {
-		Document doc = new SAXReader().read("TestBpmn\\self.bpmn");
+		Document doc = new SAXReader().read("TestBpmn\\case 1.bpmn");
 		// System.out.println(doc.getRootElement().getName());
 		BPMNData<BpmnElement> data = new BPMNData();
 		new AnalyzeTool().getNodes(doc.getRootElement(), data);
+		Graphics<BpmnElement> graphics = new Graphics<>(data);
+		String[][] h =  graphics.getIDbyNode("_2_CT");
 		System.out.println(data);
 
 	}

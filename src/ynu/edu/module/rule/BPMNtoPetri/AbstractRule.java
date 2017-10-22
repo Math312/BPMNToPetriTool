@@ -14,7 +14,6 @@ public abstract class AbstractRule {
 	
 	public abstract boolean matches(Graphics<BpmnElement> graphics);
 	
-	protected abstract LinkedList<String> split(Graphics<BpmnElement> graphics);
 	
 	public abstract void transfer(Graphics<BpmnElement> graphics,Graphics<PetriElement> result);
 	
