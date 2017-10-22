@@ -11,9 +11,7 @@ import ynu.edu.module.bpmn.BpmnElement;
 
 /** @pdOid 64dc4b0f-ab03-4b68-b49f-8621e553298d */
 public abstract class AbstractRule {
-   /** @param graphics
-    * @pdOid 10b16d24-8af3-4c0c-ac00-022617bf6da7 */
-   protected abstract Graphics<BpmnElement> split(Graphics<BpmnElement> graphics);
+  
    
    /** @param graphics
     * @pdOid 60d8efc3-fd12-437e-bca6-9a07504344ad */
