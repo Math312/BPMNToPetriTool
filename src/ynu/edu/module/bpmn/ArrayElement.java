@@ -123,5 +123,9 @@ public abstract class ArrayElement extends BpmnElement {
 	    return sb.toString();
 	    
 	   }
+   
+   public String getName() {
+	   return name;
+   }
 
 }

@@ -40,7 +40,7 @@ public class AnalyzeTool {
 		Graphics<BpmnElement> graphics = new Graphics<>(data);
 		String[][] h =  graphics.getIDbyNode("_2_CT");
 		System.out.println(data);
-
+		
 	}
 
 	public BPMNData getNodes(final Element node, BPMNData bpmnData) {
