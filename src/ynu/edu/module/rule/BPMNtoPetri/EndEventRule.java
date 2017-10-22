@@ -67,10 +67,19 @@ public class EndEventRule extends AbstractRule {
 		}
 		else {
 			for (String node : endevent_nodes) {
+				EndEvent end_event = (EndEvent) graphics.getNodeData(node);
+				String id = end_event.getId();
+				String name = end_event.getName();
 				/*   创建petri元素  */
-				Transition trans = new Transition("trans" + trans_id++);
+				Transition trans = new Transition(id, name);
+				trans_id++;
 				Arc arc = new Arc("arc" + arc_id++);
-				Place place = new Place("p" + place_id++);
+				Place place = new Place("p" + place_id++, id);
+				
+				/*	添加结点 */
+				result.addNode(trans);
+				result.addNode(arc);
+				result.addNode(place);
 				
 				/*	添加连接 */
 				result.addLink(trans.getId(), arc.getId());

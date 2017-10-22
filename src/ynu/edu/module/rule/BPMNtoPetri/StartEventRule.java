@@ -70,9 +70,12 @@ public class StartEventRule extends AbstractRule {
 		else {
 			for (String node : startevent_nodes) {
 				/*		创建petri元素	 */
-				Place place = new Place("p" + place_id++);
-				Arc arc = new Arc("arc" + arc_id);
-				Transition trans = new Transition("trans" + trans_id++);
+				StartEvent start_event = (StartEvent) graphics.getNodeData(node);
+				String id = start_event.getId();
+				String name = start_event.getName();
+				Place place = new Place("p" + place_id++, id);
+				Arc arc = new Arc("arc" + arc_id++);
+				Transition trans = new Transition("trans" + trans_id++, name);
 				
 				/*	添加结点 */
 				result.addNode(place);

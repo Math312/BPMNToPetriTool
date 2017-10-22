@@ -51,10 +51,14 @@ public class ChoreographyRule extends AbstractRule{
 		else {
 			for (String node : Choreography_nodes) {
 				Choreography chore = (Choreography) graphics.getNodeData(node);
-				String incoming = chore.getInComing();
-				String outcoming = chore.getOutGoing();
+//				String incoming = chore.getInComing();
+//				String outcoming = chore.getOutGoing();
+				String participant1 = chore.getParticipants()[0];
+				String participant2 = chore.getParticipants()[1];
+				String id = chore.getId();
 				String name = chore.getName();
-				Transition trans = new Transition(incoming + '_' + outcoming + '_' + name + trans_id++);
+				Transition trans = new Transition(id, name);
+				trans_id++;
 				result.addNode(trans);
 			}
 		}

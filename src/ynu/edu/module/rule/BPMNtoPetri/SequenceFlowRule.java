@@ -26,7 +26,7 @@ public class SequenceFlowRule extends AbstractRule {
 	@Override
 	public boolean matches(Graphics<BpmnElement> graphics) {
 		Hashtable<String, LinkedList<String>> bpmn_nodes = graphics.getIds();
-		return bpmn_nodes.containsKey(SequenceFlowRule.class.getName());	// 使用哈希表的contaisKey来判断是否存在序列流
+		return bpmn_nodes.containsKey(SequenceFlow.class.getName());	// 使用哈希表的contaisKey来判断是否存在序列流
 	}
 	
 	/**
@@ -57,7 +57,7 @@ public class SequenceFlowRule extends AbstractRule {
 		Hashtable<String, LinkedList<String>> bpmn_nodes = graphics.getIds();
 		LinkedList<String> sequenceflow_nodes;
 		if (matches(graphics)) {				//	如果存在序列流，则返回含有所有序列流id的链表
-			sequenceflow_nodes = bpmn_nodes.get(SequenceFlowRule.class.getName());
+			sequenceflow_nodes = bpmn_nodes.get(SequenceFlow.class.getName());
 		}
 		else {									//  如果不存在, 则返回null
 			sequenceflow_nodes = null;
@@ -65,12 +65,14 @@ public class SequenceFlowRule extends AbstractRule {
 		if (sequenceflow_nodes == null) {		// 如果不存在序列流，则直接跳出方法
 			return ;
 		}
-		else {									
+		else {
 			for (String node : sequenceflow_nodes) {
 				/*   创建petri元素  */
+				SequenceFlow sequence_flow = (SequenceFlow) graphics.getNodeData(node);
+				String id = sequence_flow.getId();
 				Arc arc1 = new Arc("arc" + arc_id++);	
 				Arc arc2 = new Arc("arc" + arc_id++);
-				Place place = new Place("p" + place_id++); 
+				Place place = new Place("p" + place_id++, id); 
 				
 				/*	添加结点 */
 				result.addNode(arc1);
