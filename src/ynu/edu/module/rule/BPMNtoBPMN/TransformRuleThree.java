@@ -11,18 +11,14 @@ import ynu.edu.module.bpmn.IntermediateThrowEvent;
 import ynu.edu.module.bpmn.SequenceFlow;
 
 public class TransformRuleThree extends AbstractRule {
-	Graphics g;
-	Hashtable<String,LinkedList<String>> allID = g.getIds();
+	Graphics graphics;
+	Hashtable<String,LinkedList<String>> allID ;
 	String [] choreographyID;//编排任务id
 	String [] intermediateThrowEventID;//中间事件id
 	String [][] IDbyNode ;//得到编排任务周围结点的id
 
 	
 	
-	public  TransformRuleThree(Graphics g) {
-		// TODO Auto-generated constructor stub
-		this.g = g;
-	}
 
 
 
@@ -32,24 +28,61 @@ public class TransformRuleThree extends AbstractRule {
 	//根据每个编排任务的id，判断是否满足第三规则
 	//规则为编排任务前面的结点书大于1，后面的结点数等于1
 	//满足则进一步处理
-	protected Graphics<BpmnElement> split(Graphics<BpmnElement> graphics) {
+
+
+
+	public boolean matches(Graphics<BpmnElement> graphics) {
 		// TODO Auto-generated method stub
-		choreographyID = allID.get("choreography").toArray(new String[allID.get("choreography").size()]);
+		allID = graphics.getIds();
+		choreographyID = allID.get(Choreography.class.getName()).toArray(new String[allID.get(Choreography.class.getName()).size()]);
 		for (int i=0 ; i< choreographyID.length ; i++ )
 		{
 			IDbyNode = graphics.getIDbyNode(choreographyID[i]);
 			if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
 			{
+				return true;
+			}
+		}
+		
+		intermediateThrowEventID = allID.get(IntermediateThrowEvent.class.getName()).toArray(new String[allID.get(IntermediateThrowEvent.class.getName()).size()]);
+		for (int i=0 ; i< intermediateThrowEventID.length ; i++ )
+		{
+			IDbyNode = graphics.getIDbyNode(intermediateThrowEventID[i]);
+			if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
+			{
+				return true;
+			}
+		}
+		
+		
+		return false;
+	}
+
+
+
+	@Override
+	public Graphics<BpmnElement> transfer(Graphics<BpmnElement> graphics) {
+		// TODO Auto-generated method stub
+		allID = graphics.getIds();
+		choreographyID = allID.get(Choreography.class.getName()).toArray(new String[allID.get(Choreography.class.getName()).size()]);
+		for (int i=0 ; i< choreographyID.length ; i++ )
+		{
+			IDbyNode = graphics.getIDbyNode(choreographyID[i]);
+			if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
+			{
+				System.out.println("1111111111111111111111");
 				graphics.removeNode(choreographyID[i]);
 				ExclusiveGateway exclusiveGateway = new ExclusiveGateway(Flag.getID());
+				graphics.addNode(exclusiveGateway);
 				
 				Choreography  choreography = new Choreography(Flag.getID(), "choreography", null, null);
-				SequenceFlow sequenceFlow = new SequenceFlow(Flag.getID(), exclusiveGateway.getId(),choreography.getId());
-				
-				graphics.addNode(exclusiveGateway);
 				graphics.addNode(choreography);
+				SequenceFlow sequenceFlow = new SequenceFlow(Flag.getID(), exclusiveGateway.getId(),choreography.getId());	
 				graphics.addNode(sequenceFlow);
+				
 				graphics.addLink(choreography.getId(), IDbyNode[0][0]);
+				graphics.addLink(sequenceFlow.getId(), choreography.getId());
+				graphics.addLink(exclusiveGateway.getId(), sequenceFlow.getId());
 				
 				for(int j = 0 ; j < IDbyNode[1].length; j++)
 				{
@@ -65,22 +98,24 @@ public class TransformRuleThree extends AbstractRule {
 		//根据每个编排任务的id，判断是否满足第三规则
 		//规则为中间节点前面的结点书大于1，后面的结点数等于1
 		//满足则进一步处理
-		intermediateThrowEventID = allID.get("intermediateThrowEvent").toArray(new String[allID.get("intermediateThrowEvent").size()]);
+		intermediateThrowEventID = allID.get(IntermediateThrowEvent.class.getName()).toArray(new String[allID.get(IntermediateThrowEvent.class.getName()).size()]);
 		for (int i=0 ; i< intermediateThrowEventID.length ; i++ )
 		{
 			IDbyNode = graphics.getIDbyNode(intermediateThrowEventID[i]);
 			if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
 			{
+				System.out.println("2222222222222222");
 				graphics.removeNode(intermediateThrowEventID[i]);
 				
 				ExclusiveGateway exclusiveGateway = new ExclusiveGateway(Flag.getID());
-				IntermediateThrowEvent intermediateThrowEvent = new IntermediateThrowEvent(Flag.getID(), "intermediateThrowEv");
-				
-				SequenceFlow sequenceFlow = new SequenceFlow(Flag.getID(), exclusiveGateway.getId(),intermediateThrowEvent.getId());
-				
 				graphics.addNode(exclusiveGateway);
-				graphics.addNode(intermediateThrowEvent);
+				IntermediateThrowEvent intermediateThrowEvent = new IntermediateThrowEvent(Flag.getID(), "intermediateThrowEv");
+				graphics.addNode(intermediateThrowEvent);				
+				SequenceFlow sequenceFlow = new SequenceFlow(Flag.getID(), exclusiveGateway.getId(),intermediateThrowEvent.getId());
 				graphics.addNode(sequenceFlow);
+				
+				graphics.addLink(sequenceFlow.getId(), intermediateThrowEvent.getId());
+				graphics.addLink(exclusiveGateway.getId(), sequenceFlow.getId());
 				graphics.addLink(intermediateThrowEvent.getId(), IDbyNode[0][0]);
 				
 				for(int j = 0 ; j < IDbyNode[1].length; j++)
@@ -91,22 +126,6 @@ public class TransformRuleThree extends AbstractRule {
 			}
 		}
 		
-		return null;
-	}
-
-
-
-	@Override
-	public boolean matches(Graphics<BpmnElement> graphics) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-
-	@Override
-	public Graphics<BpmnElement> transfer(Graphics<BpmnElement> graphics) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

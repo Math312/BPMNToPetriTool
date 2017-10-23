@@ -20,11 +20,7 @@ public abstract class CommonElement extends BpmnElement {
     * 
     * @pdOid e677ea60-9ac6-4114-aaf5-a1e3922b23e8 */
    protected String outGoing;
-   /** 
-    * 当前标签ID
-    * 
-    * @pdOid 885cec2c-f003-4923-9c54-3ee0a31a7997 */
-   protected String id;
+
    /** 当前标签名字
     * 
     * 

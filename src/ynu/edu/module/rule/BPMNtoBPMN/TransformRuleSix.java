@@ -10,15 +10,13 @@ import ynu.edu.module.bpmn.ParallelGateway;
 import ynu.edu.module.bpmn.SequenceFlow;
 
 public class TransformRuleSix extends AbstractRule{
-	Graphics g;
-	Hashtable<String,LinkedList<String>> h = g.getIds();
-	String [] allID;
+	Graphics graphics;
+	Hashtable<String,LinkedList<String>> allId;
+	String [] parallelGatewayID;
+	String [] exclusiveGatewayID;
 	String [][] IDbyNode ;
 	
-	public  TransformRuleSix(Graphics g) {
-		// TODO Auto-generated constructor stub
-		this.g = g;
-	}
+	
 	
 	
 	
@@ -31,80 +29,33 @@ public class TransformRuleSix extends AbstractRule{
 	
 	
 	
-	@Override
-	protected Graphics<BpmnElement> split(Graphics<BpmnElement> graphics) {
-		// TODO Auto-generated method stub
-		allID = h.get("parallelGateway").toArray(new String[h.get("parallelGateway").size()]);
-		// 把平行网关的所有id存入数组
-		for (int i = 0 ; i < allID.length; i++)
-		{
-			IDbyNode = g.getIDbyNode(allID[i]);
-			
-
-			ParallelGateway parallelGateway1 = new ParallelGateway(Flag.getID());//new一个并行网关
-			ParallelGateway parallelGateway2 = new ParallelGateway(Flag.getID());//new一个并行网关
-			
-			if(IDbyNode[0].length<2 || IDbyNode[1].length<2)
-			{
-				continue; //如果不满足前后各个联系大于1，就跳过
-			}
-			g.removeNode(allID[i]);
-			
-			graphics.addNode(parallelGateway1);
-			graphics.addNode(parallelGateway2);
-			
-			for (int j = 0; j < IDbyNode[1].length; j++){
-				g.addLink(IDbyNode[1][j],parallelGateway1.getId()) ;
-			}
-			for (int j = 0; j < IDbyNode[0].length; j++){
-				g.addLink(parallelGateway2.getId(), IDbyNode[0][j]);
-			}
-			SequenceFlow sequenceFlow =new SequenceFlow (Flag.getID(),parallelGateway1.getId(),parallelGateway2.getId());
-			graphics.addNode(sequenceFlow);
-		}
-		
-		//=================================================================================================//
-		//遍历这个图，得到图中所有排他网关的id
-		//根据每个排他网关的id，判断是否满足第六规则
-		//规则为编排任务前面的结点数大于1，后面的结点数大于1
-		//满足则进一步处理
-		
-		allID = h.get("exclusiveGateway").toArray(new String[h.get("xclusiveGateway").size()]);
-		for (int i = 0 ; i < allID.length; i++)
-		{
-			IDbyNode = g.getIDbyNode(allID[i]);
-			
-			ExclusiveGateway exclusiveGateway1 = new ExclusiveGateway(Flag.getID());//new一个排他网关
-			ExclusiveGateway exclusiveGateway2 = new ExclusiveGateway(Flag.getID());//new一个排他网关
-			
-			if(IDbyNode[0].length<2 || IDbyNode[1].length<2)
-			{
-				continue; //如果不满足前后各个联系大于1，就跳过
-			}
-			g.removeNode(allID[i]);
-			
-			graphics.addNode(exclusiveGateway1);
-			graphics.addNode(exclusiveGateway2);
-			
-			for (int j = 0; j < IDbyNode[1].length; j++){
-				g.addLink(IDbyNode[1][j],exclusiveGateway1.getId()) ;
-			}
-			for (int j = 0; j < IDbyNode[0].length; j++){
-				g.addLink(exclusiveGateway2.getId(), IDbyNode[0][j]);
-			}
-			SequenceFlow sequenceFlow =new SequenceFlow (Flag.getID(),exclusiveGateway1.getId(),exclusiveGateway2.getId());
-			graphics.addNode(sequenceFlow);
-			
-		}	
-		
-		
-		return null;
-	}
+	
 
 	
 	@Override
 	public boolean matches(Graphics<BpmnElement> graphics) {
 		// TODO Auto-generated method stub
+		allId = graphics.getIds();
+		parallelGatewayID = allId.get("parallelGateway").toArray(new String[allId.get("parallelGateway").size()]);
+		// 把平行网关的所有id存入数组
+		for (int i = 0 ; i < parallelGatewayID.length; i++)
+		{
+			IDbyNode = graphics.getIDbyNode(parallelGatewayID[i]);
+			if(IDbyNode[0].length>1 || IDbyNode[1].length>1)
+			{
+				return true;
+			}
+		}
+		
+		parallelGatewayID = allId.get("exclusiveGateway").toArray(new String[allId.get("xclusiveGateway").size()]);
+		for (int i = 0 ; i < parallelGatewayID.length; i++)
+		{
+			IDbyNode = graphics.getIDbyNode(parallelGatewayID[i]);
+			if(IDbyNode[0].length>1 || IDbyNode[1].length>1)
+			{
+				return true;
+			}
+		}
 		return false;
 		
 	}
@@ -113,6 +64,78 @@ public class TransformRuleSix extends AbstractRule{
 	@Override
 	public Graphics<BpmnElement> transfer(Graphics<BpmnElement> graphics) {
 		// TODO Auto-generated method stub
+		allId = graphics.getIds();
+		parallelGatewayID = allId.get(ParallelGateway.class.getName()).toArray(new String[allId.get(ParallelGateway.class.getName()).size()]);
+		// 把平行网关的所有id存入数组
+		for (int i = 0 ; i < parallelGatewayID.length; i++)
+		{
+			IDbyNode = graphics.getIDbyNode(parallelGatewayID[i]);
+			
+
+			if(IDbyNode[0].length<2 || IDbyNode[1].length<2)
+			{
+				continue; //如果不满足前后各个联系大于1，就跳过
+			}
+			graphics.removeNode(parallelGatewayID[i]);
+			
+			ParallelGateway parallelGateway1 = new ParallelGateway(Flag.getID());//new一个并行网关
+			ParallelGateway parallelGateway2 = new ParallelGateway(Flag.getID());//new一个并行网关
+			
+			
+			graphics.addNode(parallelGateway1);
+			graphics.addNode(parallelGateway2);
+			
+			for (int j = 0; j < IDbyNode[1].length; j++){
+				graphics.addLink(IDbyNode[1][j],parallelGateway1.getId()) ;
+			}
+			for (int j = 0; j < IDbyNode[0].length; j++){
+				graphics.addLink(parallelGateway2.getId(), IDbyNode[0][j]);
+			}
+			SequenceFlow sequenceFlow =new SequenceFlow (Flag.getID(),parallelGateway1.getId(),parallelGateway2.getId());
+			graphics.addNode(sequenceFlow);
+			graphics.addLink(parallelGateway1.getId(), sequenceFlow.getId());
+			graphics.addLink(sequenceFlow.getId(),parallelGateway2.getId());
+			
+			
+		}
+		
+		//=================================================================================================//
+		//遍历这个图，得到图中所有排他网关的id
+		//根据每个排他网关的id，判断是否满足第六规则
+		//规则为编排任务前面的结点数大于1，后面的结点数大于1
+		//满足则进一步处理
+		
+		exclusiveGatewayID = allId.get(ExclusiveGateway.class.getName()).toArray(new String[allId.get(ExclusiveGateway.class.getName()).size()]);
+		for (int i = 0 ; i < exclusiveGatewayID.length; i++)
+		{
+			IDbyNode = graphics.getIDbyNode(exclusiveGatewayID[i]);
+			
+			if(IDbyNode[0].length<2 || IDbyNode[1].length<2)
+			{
+				continue; //如果不满足前后各个联系大于1，就跳过
+			}
+			graphics.removeNode(exclusiveGatewayID[i]);
+			
+			ExclusiveGateway exclusiveGateway1 = new ExclusiveGateway(Flag.getID());//new一个排他网关
+			ExclusiveGateway exclusiveGateway2 = new ExclusiveGateway(Flag.getID());//new一个排他网关
+			
+			
+			graphics.addNode(exclusiveGateway1);
+			graphics.addNode(exclusiveGateway2);
+			
+			for (int j = 0; j < IDbyNode[1].length; j++){
+				graphics.addLink(IDbyNode[1][j],exclusiveGateway1.getId()) ;
+			}
+			for (int j = 0; j < IDbyNode[0].length; j++){
+				graphics.addLink(exclusiveGateway2.getId(), IDbyNode[0][j]);
+			}
+			SequenceFlow sequenceFlow =new SequenceFlow (Flag.getID(),exclusiveGateway1.getId(),exclusiveGateway2.getId());
+			graphics.addNode(sequenceFlow);
+			
+			graphics.addLink(exclusiveGateway1.getId(), sequenceFlow.getId());
+			graphics.addLink(sequenceFlow.getId(),exclusiveGateway2.getId());
+			
+		}	
 		return null;
 	}
 
