@@ -73,8 +73,9 @@ public class EndEventRule extends AbstractRule {
 				/*   创建petri元素  */
 				Transition trans = new Transition(id, name);
 				trans_id++;
-				Arc arc = new Arc("arc" + arc_id++);
 				Place place = new Place("p" + place_id++, id);
+				Arc arc = new Arc(trans.getId() + " to " + place.getId());
+				
 				
 				/*	添加结点 */
 				result.addNode(trans);

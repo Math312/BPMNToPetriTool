@@ -74,8 +74,8 @@ public class StartEventRule extends AbstractRule {
 				String id = start_event.getId();
 				String name = start_event.getName();
 				Place place = new Place("p" + place_id++, id);
-				Arc arc = new Arc("arc" + arc_id++);
 				Transition trans = new Transition("trans" + trans_id++, name);
+				Arc arc = new Arc(place.getId() + " to " + trans.getId());
 				
 				/*	添加结点 */
 				result.addNode(place);
