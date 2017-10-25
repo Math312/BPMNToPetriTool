@@ -61,7 +61,7 @@ public abstract class ArrayElement extends BpmnElement {
    
    /** @pdOid a27d4dfd-53b2-4e37-a802-8945e406e97b */
    public String getInComing() {
-   	if(inComing == null) 
+   	if(inComing == null || inComing.size() == 0) 
    	{
    		return "";
    	}
@@ -79,7 +79,7 @@ public abstract class ArrayElement extends BpmnElement {
    
    /** @pdOid b27d14c8-7735-4136-af6d-2d5b31f81ac1 */
    public String getOutGoing() {
-   	if(outGoing == null) 
+   	if(outGoing == null || outGoing.size() == 0) 
    	{
    		return "";
    	}
