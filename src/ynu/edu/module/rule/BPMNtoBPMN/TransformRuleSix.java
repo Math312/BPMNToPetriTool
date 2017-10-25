@@ -15,12 +15,6 @@ public class TransformRuleSix extends AbstractRule{
 	String [] parallelGatewayID;
 	String [] exclusiveGatewayID;
 	String [][] IDbyNode ;
-	
-	
-	
-	
-	
-	
 	//=================================================================================================//
 	//遍历这个图，得到图中所有并行网关的id
 	//根据每个并行网关的id，判断是否满足第六规则
@@ -36,24 +30,30 @@ public class TransformRuleSix extends AbstractRule{
 	public boolean matches(Graphics<BpmnElement> graphics) {
 		// TODO Auto-generated method stub
 		allId = graphics.getIds();
-		parallelGatewayID = allId.get("parallelGateway").toArray(new String[allId.get("parallelGateway").size()]);
 		// 把平行网关的所有id存入数组
-		for (int i = 0 ; i < parallelGatewayID.length; i++)
+		if(allId.get(ParallelGateway.class.getName())!=null)
 		{
-			IDbyNode = graphics.getIDbyNode(parallelGatewayID[i]);
-			if(IDbyNode[0].length>1 || IDbyNode[1].length>1)
+			parallelGatewayID = allId.get(ParallelGateway.class.getName()).toArray(new String[allId.get(ParallelGateway.class.getName()).size()]);
+		// 把平行网关的所有id存入数组
+			for (int i = 0 ; i < parallelGatewayID.length; i++)
 			{
-				return true;
+				IDbyNode = graphics.getIDbyNode(parallelGatewayID[i]);
+				if(IDbyNode[0].length>1 && IDbyNode[1].length>1)
+				{
+					return true;
+				}
 			}
 		}
-		
-		parallelGatewayID = allId.get("exclusiveGateway").toArray(new String[allId.get("xclusiveGateway").size()]);
-		for (int i = 0 ; i < parallelGatewayID.length; i++)
+		if(allId.get(ExclusiveGateway.class.getName())!=null)
 		{
-			IDbyNode = graphics.getIDbyNode(parallelGatewayID[i]);
-			if(IDbyNode[0].length>1 || IDbyNode[1].length>1)
+			exclusiveGatewayID = allId.get(ExclusiveGateway.class.getName()).toArray(new String[allId.get(ExclusiveGateway.class.getName()).size()]);
+			for (int i = 0 ; i < parallelGatewayID.length; i++)
 			{
-				return true;
+				IDbyNode = graphics.getIDbyNode(parallelGatewayID[i]);
+				if(IDbyNode[0].length>1 && IDbyNode[1].length>1)
+				{
+					return true;
+				}
 			}
 		}
 		return false;
@@ -65,77 +65,79 @@ public class TransformRuleSix extends AbstractRule{
 	public Graphics<BpmnElement> transfer(Graphics<BpmnElement> graphics) {
 		// TODO Auto-generated method stub
 		allId = graphics.getIds();
-		parallelGatewayID = allId.get(ParallelGateway.class.getName()).toArray(new String[allId.get(ParallelGateway.class.getName()).size()]);
-		// 把平行网关的所有id存入数组
-		for (int i = 0 ; i < parallelGatewayID.length; i++)
+		if(allId.get(ParallelGateway.class.getName())!=null)
 		{
-			IDbyNode = graphics.getIDbyNode(parallelGatewayID[i]);
-			
-
-			if(IDbyNode[0].length<2 || IDbyNode[1].length<2)
+			parallelGatewayID = allId.get(ParallelGateway.class.getName()).toArray(new String[allId.get(ParallelGateway.class.getName()).size()]);
+			// 把平行网关的所有id存入数组
+			for (int i = 0 ; i < parallelGatewayID.length; i++)
 			{
-				continue; //如果不满足前后各个联系大于1，就跳过
+				IDbyNode = graphics.getIDbyNode(parallelGatewayID[i]);
+				if(IDbyNode[0].length<2 || IDbyNode[1].length<2)
+				{
+					continue; //如果不满足前后各个联系大于1，就跳过
+				}
+				graphics.removeNode(parallelGatewayID[i]);
+				
+				ParallelGateway parallelGateway1 = new ParallelGateway(Flag.getID());//new一个并行网关
+				ParallelGateway parallelGateway2 = new ParallelGateway(Flag.getID());//new一个并行网关
+				
+				
+				graphics.addNode(parallelGateway1);
+				graphics.addNode(parallelGateway2);
+				
+				for (int j = 0; j < IDbyNode[1].length; j++){
+					graphics.addLink(IDbyNode[1][j],parallelGateway1.getId()) ;
+				}
+				for (int j = 0; j < IDbyNode[0].length; j++){
+					graphics.addLink(parallelGateway2.getId(), IDbyNode[0][j]);
+				}
+				SequenceFlow sequenceFlow =new SequenceFlow (Flag.getID(),parallelGateway1.getId(),parallelGateway2.getId());
+				graphics.addNode(sequenceFlow);
+				graphics.addLink(parallelGateway1.getId(), sequenceFlow.getId());
+				graphics.addLink(sequenceFlow.getId(),parallelGateway2.getId());
+				
+				
 			}
-			graphics.removeNode(parallelGatewayID[i]);
-			
-			ParallelGateway parallelGateway1 = new ParallelGateway(Flag.getID());//new一个并行网关
-			ParallelGateway parallelGateway2 = new ParallelGateway(Flag.getID());//new一个并行网关
-			
-			
-			graphics.addNode(parallelGateway1);
-			graphics.addNode(parallelGateway2);
-			
-			for (int j = 0; j < IDbyNode[1].length; j++){
-				graphics.addLink(IDbyNode[1][j],parallelGateway1.getId()) ;
-			}
-			for (int j = 0; j < IDbyNode[0].length; j++){
-				graphics.addLink(parallelGateway2.getId(), IDbyNode[0][j]);
-			}
-			SequenceFlow sequenceFlow =new SequenceFlow (Flag.getID(),parallelGateway1.getId(),parallelGateway2.getId());
-			graphics.addNode(sequenceFlow);
-			graphics.addLink(parallelGateway1.getId(), sequenceFlow.getId());
-			graphics.addLink(sequenceFlow.getId(),parallelGateway2.getId());
-			
-			
 		}
-		
 		//=================================================================================================//
 		//遍历这个图，得到图中所有排他网关的id
 		//根据每个排他网关的id，判断是否满足第六规则
 		//规则为编排任务前面的结点数大于1，后面的结点数大于1
 		//满足则进一步处理
-		
-		exclusiveGatewayID = allId.get(ExclusiveGateway.class.getName()).toArray(new String[allId.get(ExclusiveGateway.class.getName()).size()]);
-		for (int i = 0 ; i < exclusiveGatewayID.length; i++)
+		if(allId.get(ExclusiveGateway.class.getName())!=null)
 		{
-			IDbyNode = graphics.getIDbyNode(exclusiveGatewayID[i]);
-			
-			if(IDbyNode[0].length<2 || IDbyNode[1].length<2)
+			exclusiveGatewayID = allId.get(ExclusiveGateway.class.getName()).toArray(new String[allId.get(ExclusiveGateway.class.getName()).size()]);
+			for (int i = 0 ; i < exclusiveGatewayID.length; i++)
 			{
-				continue; //如果不满足前后各个联系大于1，就跳过
-			}
-			graphics.removeNode(exclusiveGatewayID[i]);
-			
-			ExclusiveGateway exclusiveGateway1 = new ExclusiveGateway(Flag.getID());//new一个排他网关
-			ExclusiveGateway exclusiveGateway2 = new ExclusiveGateway(Flag.getID());//new一个排他网关
-			
-			
-			graphics.addNode(exclusiveGateway1);
-			graphics.addNode(exclusiveGateway2);
-			
-			for (int j = 0; j < IDbyNode[1].length; j++){
-				graphics.addLink(IDbyNode[1][j],exclusiveGateway1.getId()) ;
-			}
-			for (int j = 0; j < IDbyNode[0].length; j++){
-				graphics.addLink(exclusiveGateway2.getId(), IDbyNode[0][j]);
-			}
-			SequenceFlow sequenceFlow =new SequenceFlow (Flag.getID(),exclusiveGateway1.getId(),exclusiveGateway2.getId());
-			graphics.addNode(sequenceFlow);
-			
-			graphics.addLink(exclusiveGateway1.getId(), sequenceFlow.getId());
-			graphics.addLink(sequenceFlow.getId(),exclusiveGateway2.getId());
-			
-		}	
+				IDbyNode = graphics.getIDbyNode(exclusiveGatewayID[i]);
+				
+				if(IDbyNode[0].length<2 || IDbyNode[1].length<2)
+				{
+					continue; //如果不满足前后各个联系大于1，就跳过
+				}
+				graphics.removeNode(exclusiveGatewayID[i]);
+				
+				ExclusiveGateway exclusiveGateway1 = new ExclusiveGateway(Flag.getID());//new一个排他网关
+				ExclusiveGateway exclusiveGateway2 = new ExclusiveGateway(Flag.getID());//new一个排他网关
+				
+				
+				graphics.addNode(exclusiveGateway1);
+				graphics.addNode(exclusiveGateway2);
+				
+				for (int j = 0; j < IDbyNode[1].length; j++){
+					graphics.addLink(IDbyNode[1][j],exclusiveGateway1.getId()) ;
+				}
+				for (int j = 0; j < IDbyNode[0].length; j++){
+					graphics.addLink(exclusiveGateway2.getId(), IDbyNode[0][j]);
+				}
+				SequenceFlow sequenceFlow =new SequenceFlow (Flag.getID(),exclusiveGateway1.getId(),exclusiveGateway2.getId());
+				graphics.addNode(sequenceFlow);
+				
+				graphics.addLink(exclusiveGateway1.getId(), sequenceFlow.getId());
+				graphics.addLink(sequenceFlow.getId(),exclusiveGateway2.getId());
+				
+			}	
+		}
 		return null;
 	}
 

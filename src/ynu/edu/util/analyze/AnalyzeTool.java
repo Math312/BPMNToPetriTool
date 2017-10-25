@@ -2,7 +2,9 @@ package ynu.edu.util.analyze;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -24,6 +26,9 @@ import ynu.edu.module.bpmn.Association;
 import ynu.edu.module.bpmn.ParallelGateway;
 import ynu.edu.module.bpmn.SequenceFlow;
 import ynu.edu.module.bpmn.StartEvent;
+import ynu.edu.module.petri.PetriElement;
+import ynu.edu.module.rule.BPMNtoBPMN.*;
+import ynu.edu.module.rule.BPMNtoPetri.*;
 
 public class AnalyzeTool {
 
@@ -33,14 +38,89 @@ public class AnalyzeTool {
 	}
 
 	void AnalyzeBpmn() throws DocumentException {
-		Document doc = new SAXReader().read("TestBpmn\\case 1.bpmn");
+		Document doc = new SAXReader().read("TestBpmn\\testfile.bpmn");
 		// System.out.println(doc.getRootElement().getName());
 		BPMNData<BpmnElement> data = new BPMNData();
 		new AnalyzeTool().getNodes(doc.getRootElement(), data);
 		Graphics<BpmnElement> graphics = new Graphics<>(data);
-		String[][] h =  graphics.getIDbyNode("_2_CT");
-		System.out.println(data);
-
+//		boolean label = true;
+//		ChoreographyRule choreographyRule  = new ChoreographyRule();
+//		EndEventRule endEventRule = new EndEventRule();
+//		IntermediateEventRule intermediateEventRule = new IntermediateEventRule();
+//		SequenceFlowRule sequenceFlowRule = new SequenceFlowRule();
+//		StartEventRule startEventRule = new StartEventRule();
+//		Graphics<PetriElement> g =  new Graphics<>();
+//		
+//			if(choreographyRule.matches(graphics)) 
+//			{
+//				choreographyRule.transfer(graphics, g);
+//			}
+//			if(endEventRule.matches(graphics)) 
+//			{
+//				endEventRule.transfer(graphics, g);
+//			}
+//			if(intermediateEventRule.matches(graphics)) 
+//			{
+//				intermediateEventRule.transfer(graphics, g);
+//			}
+//			if(sequenceFlowRule.matches(graphics)) 
+//			{
+//				sequenceFlowRule.transfer(graphics, g);
+//			}
+//			if(startEventRule.matches(graphics)) 
+//			{
+//				startEventRule.transfer(graphics, g);
+//			}
+//			
+//		Hashtable<String,LinkedList<String>> table = g.getIds();
+//		for(Entry<String,LinkedList<String>> e:table.entrySet()) 
+//		{
+//			LinkedList<String> s = e.getValue();
+//			System.out.println("\n");
+//			for(String s1:s) 
+//			{
+//				System.out.print(s1+"      ");
+//			}
+//		}
+		
+		TransformRuleOne t1 = new TransformRuleOne();
+		TransformRuleTwo t2 = new TransformRuleTwo();
+		TransformRuleThree t3 = new TransformRuleThree();
+		TransformRuleFour t4 = new TransformRuleFour();
+		TransformRuleSix t6 = new TransformRuleSix();
+		TransformRuleSeven t7 = new TransformRuleSeven();
+		
+		while(true) 
+		{
+			if(t1.matches(graphics)) 
+			{
+				t1.transfer(graphics);
+			}
+			else if(t2.matches(graphics)) 
+			{
+				t2.transfer(graphics);
+			}else if(t3.matches(graphics)) 
+			{
+				t3.transfer(graphics);
+			}else if(t4.matches(graphics)) 
+			{
+				t4.transfer(graphics);
+			}
+			else if(t6.matches(graphics)) 
+			{
+				t6.transfer(graphics);
+			}
+			else if(t7.matches(graphics)) 
+			{
+				t7.transfer(graphics);
+			}
+			else 
+			{
+				break;
+			}
+		}
+		graphics.getIds();
+		
 	}
 
 	public BPMNData getNodes(final Element node, BPMNData bpmnData) {

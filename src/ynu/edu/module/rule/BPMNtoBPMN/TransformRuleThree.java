@@ -34,27 +34,30 @@ public class TransformRuleThree extends AbstractRule {
 	public boolean matches(Graphics<BpmnElement> graphics) {
 		// TODO Auto-generated method stub
 		allID = graphics.getIds();
-		choreographyID = allID.get(Choreography.class.getName()).toArray(new String[allID.get(Choreography.class.getName()).size()]);
-		for (int i=0 ; i< choreographyID.length ; i++ )
+		if(allID.get(Choreography.class.getName())!=null)
 		{
-			IDbyNode = graphics.getIDbyNode(choreographyID[i]);
-			if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
+			choreographyID = allID.get(Choreography.class.getName()).toArray(new String[allID.get(Choreography.class.getName()).size()]);
+			for (int i=0 ; i< choreographyID.length ; i++ )
 			{
-				return true;
+				IDbyNode = graphics.getIDbyNode(choreographyID[i]);
+				if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
+				{
+					return true;
+				}
 			}
 		}
-		
-		intermediateThrowEventID = allID.get(IntermediateThrowEvent.class.getName()).toArray(new String[allID.get(IntermediateThrowEvent.class.getName()).size()]);
-		for (int i=0 ; i< intermediateThrowEventID.length ; i++ )
+		if(allID.get(IntermediateThrowEvent.class.getName()) != null)
 		{
-			IDbyNode = graphics.getIDbyNode(intermediateThrowEventID[i]);
-			if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
+			intermediateThrowEventID = allID.get(IntermediateThrowEvent.class.getName()).toArray(new String[allID.get(IntermediateThrowEvent.class.getName()).size()]);
+			for (int i=0 ; i< intermediateThrowEventID.length ; i++ )
 			{
-				return true;
+				IDbyNode = graphics.getIDbyNode(intermediateThrowEventID[i]);
+				if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
+				{
+					return true;
+				}
 			}
 		}
-		
-		
 		return false;
 	}
 
@@ -64,31 +67,33 @@ public class TransformRuleThree extends AbstractRule {
 	public Graphics<BpmnElement> transfer(Graphics<BpmnElement> graphics) {
 		// TODO Auto-generated method stub
 		allID = graphics.getIds();
-		choreographyID = allID.get(Choreography.class.getName()).toArray(new String[allID.get(Choreography.class.getName()).size()]);
-		for (int i=0 ; i< choreographyID.length ; i++ )
+		if(allID.get(Choreography.class.getName()) != null)
 		{
-			IDbyNode = graphics.getIDbyNode(choreographyID[i]);
-			if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
+			choreographyID = allID.get(Choreography.class.getName()).toArray(new String[allID.get(Choreography.class.getName()).size()]);
+			for (int i=0 ; i< choreographyID.length ; i++ )
 			{
-				System.out.println("1111111111111111111111");
-				graphics.removeNode(choreographyID[i]);
-				ExclusiveGateway exclusiveGateway = new ExclusiveGateway(Flag.getID());
-				graphics.addNode(exclusiveGateway);
-				
-				Choreography  choreography = new Choreography(Flag.getID(), "choreography", null, null);
-				graphics.addNode(choreography);
-				SequenceFlow sequenceFlow = new SequenceFlow(Flag.getID(), exclusiveGateway.getId(),choreography.getId());	
-				graphics.addNode(sequenceFlow);
-				
-				graphics.addLink(choreography.getId(), IDbyNode[0][0]);
-				graphics.addLink(sequenceFlow.getId(), choreography.getId());
-				graphics.addLink(exclusiveGateway.getId(), sequenceFlow.getId());
-				
-				for(int j = 0 ; j < IDbyNode[1].length; j++)
+				IDbyNode = graphics.getIDbyNode(choreographyID[i]);
+				if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
 				{
-					graphics.addLink(IDbyNode[1][j], exclusiveGateway.getId() );
+					graphics.removeNode(choreographyID[i]);
+					ExclusiveGateway exclusiveGateway = new ExclusiveGateway(Flag.getID());
+					graphics.addNode(exclusiveGateway);
+					
+					Choreography  choreography = new Choreography(Flag.getID(), "choreography", null, null);
+					graphics.addNode(choreography);
+					SequenceFlow sequenceFlow = new SequenceFlow(Flag.getID(), exclusiveGateway.getId(),choreography.getId());	
+					graphics.addNode(sequenceFlow);
+					
+					graphics.addLink(choreography.getId(), IDbyNode[0][0]);
+					graphics.addLink(sequenceFlow.getId(), choreography.getId());
+					graphics.addLink(exclusiveGateway.getId(), sequenceFlow.getId());
+					
+					for(int j = 0 ; j < IDbyNode[1].length; j++)
+					{
+						graphics.addLink(IDbyNode[1][j], exclusiveGateway.getId() );
+					}
+					
 				}
-				
 			}
 		}
 		
@@ -98,34 +103,35 @@ public class TransformRuleThree extends AbstractRule {
 		//根据每个编排任务的id，判断是否满足第三规则
 		//规则为中间节点前面的结点书大于1，后面的结点数等于1
 		//满足则进一步处理
-		intermediateThrowEventID = allID.get(IntermediateThrowEvent.class.getName()).toArray(new String[allID.get(IntermediateThrowEvent.class.getName()).size()]);
-		for (int i=0 ; i< intermediateThrowEventID.length ; i++ )
+		if(allID.get(IntermediateThrowEvent.class.getName())!=null)
 		{
-			IDbyNode = graphics.getIDbyNode(intermediateThrowEventID[i]);
-			if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
+			intermediateThrowEventID = allID.get(IntermediateThrowEvent.class.getName()).toArray(new String[allID.get(IntermediateThrowEvent.class.getName()).size()]);
+			for (int i=0 ; i< intermediateThrowEventID.length ; i++ )
 			{
-				System.out.println("2222222222222222");
-				graphics.removeNode(intermediateThrowEventID[i]);
-				
-				ExclusiveGateway exclusiveGateway = new ExclusiveGateway(Flag.getID());
-				graphics.addNode(exclusiveGateway);
-				IntermediateThrowEvent intermediateThrowEvent = new IntermediateThrowEvent(Flag.getID(), "intermediateThrowEv");
-				graphics.addNode(intermediateThrowEvent);				
-				SequenceFlow sequenceFlow = new SequenceFlow(Flag.getID(), exclusiveGateway.getId(),intermediateThrowEvent.getId());
-				graphics.addNode(sequenceFlow);
-				
-				graphics.addLink(sequenceFlow.getId(), intermediateThrowEvent.getId());
-				graphics.addLink(exclusiveGateway.getId(), sequenceFlow.getId());
-				graphics.addLink(intermediateThrowEvent.getId(), IDbyNode[0][0]);
-				
-				for(int j = 0 ; j < IDbyNode[1].length; j++)
+				IDbyNode = graphics.getIDbyNode(intermediateThrowEventID[i]);
+				if(IDbyNode[0].length==1&&IDbyNode[1].length>1)
 				{
-					graphics.addLink(IDbyNode[1][j], exclusiveGateway.getId() );
+					graphics.removeNode(intermediateThrowEventID[i]);
+					
+					ExclusiveGateway exclusiveGateway = new ExclusiveGateway(Flag.getID());
+					graphics.addNode(exclusiveGateway);
+					IntermediateThrowEvent intermediateThrowEvent = new IntermediateThrowEvent(Flag.getID(), "intermediateThrowEv");
+					graphics.addNode(intermediateThrowEvent);				
+					SequenceFlow sequenceFlow = new SequenceFlow(Flag.getID(), exclusiveGateway.getId(),intermediateThrowEvent.getId());
+					graphics.addNode(sequenceFlow);
+					
+					graphics.addLink(sequenceFlow.getId(), intermediateThrowEvent.getId());
+					graphics.addLink(exclusiveGateway.getId(), sequenceFlow.getId());
+					graphics.addLink(intermediateThrowEvent.getId(), IDbyNode[0][0]);
+					
+					for(int j = 0 ; j < IDbyNode[1].length; j++)
+					{
+						graphics.addLink(IDbyNode[1][j], exclusiveGateway.getId() );
+					}
+					
 				}
-				
 			}
 		}
-		
 		return null;
 	}
 }

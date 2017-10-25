@@ -72,7 +72,7 @@ public class Graphics <T extends GNode> {
 	   
 	   while(pre != null) 
 	   {
-		   nextList.add(pre.id);
+		   preList.add(pre.id);
 		   pre = pre.next;
 	   }
 	   

@@ -27,6 +27,7 @@ public abstract class GateElement extends BpmnElement {
     * 
     * @pdOid 2b146967-119e-4e5c-851e-927e4e8a99ec */
    protected String id;
+   protected String name;
    
    /** 用于向存储前集ID的集合中添加信息
     * 
@@ -82,6 +83,10 @@ public abstract class GateElement extends BpmnElement {
    /** @pdOid be68d7e5-7d6c-4f76-b61c-9d0b8c964dfd */
    public String getId() {
    	return id;
+   }
+   
+   public String getName() {
+	   return name;
    }
 
 }
