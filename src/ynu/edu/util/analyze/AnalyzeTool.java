@@ -38,7 +38,7 @@ public class AnalyzeTool {
 	}
 
 	void AnalyzeBpmn() throws DocumentException {
-		Document doc = new SAXReader().read("TestBpmn\\testfile.bpmn");
+		Document doc = new SAXReader().read("TestBpmn\\test.bpmn");
 		// System.out.println(doc.getRootElement().getName());
 		BPMNData<BpmnElement> data = new BPMNData();
 		new AnalyzeTool().getNodes(doc.getRootElement(), data);
@@ -87,6 +87,7 @@ public class AnalyzeTool {
 		TransformRuleTwo t2 = new TransformRuleTwo();
 		TransformRuleThree t3 = new TransformRuleThree();
 		TransformRuleFour t4 = new TransformRuleFour();
+		TransformRuleFive t5 = new TransformRuleFive();
 		TransformRuleSix t6 = new TransformRuleSix();
 		TransformRuleSeven t7 = new TransformRuleSeven();
 		
@@ -99,13 +100,19 @@ public class AnalyzeTool {
 			else if(t2.matches(graphics)) 
 			{
 				t2.transfer(graphics);
-			}else if(t3.matches(graphics)) 
+			}
+			else if(t3.matches(graphics)) 
 			{
 				t3.transfer(graphics);
-			}else if(t4.matches(graphics)) 
+			}
+			else if(t4.matches(graphics)) 
 			{
 				t4.transfer(graphics);
 			}
+			else if(t5.matches(graphics))
+			{
+				t5.transfer(graphics);
+			}	
 			else if(t6.matches(graphics)) 
 			{
 				t6.transfer(graphics);

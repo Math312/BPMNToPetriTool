@@ -116,7 +116,7 @@ public class TransformRuleFour extends AbstractRule {
 					graphics.addLink(sequenceFlow.getId(),parallelGateway.getId());
 					graphics.addLink(IDbyNode[1][0],intermediateThrowEvent.getId());
 					
-					for(int j = 0 ; j < IDbyNode[1].length; j++)
+					for(int j = 0 ; j < IDbyNode[0].length; j++)
 					{
 						graphics.addLink(parallelGateway.getId(), IDbyNode[0][j] );
 					}

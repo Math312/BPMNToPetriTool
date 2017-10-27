@@ -193,7 +193,8 @@ public class TransformRuleSeven extends AbstractRule{
 					graphics.addLink(sequenceFlow1.getId(),choreography.getId());
 					graphics.addLink(choreography.getId(),sequenceFlow2.getId());
 					graphics.addLink(sequenceFlow2.getId(),tempID);
-					
+					flag1 = false;
+					flag2 = false;
 				}			
 			}
 		}

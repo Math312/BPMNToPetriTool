@@ -13,7 +13,6 @@ import ynu.edu.module.bpmn.StartEvent;
 
 public class TransformRuleTwo extends AbstractRule{
 	
-	Graphics graphics;
 	String endId;//结束事件的ID
 	String IDbyEnd[];//存储开始事件之前结点的ID
 	ExclusiveGateway exclusiveGateway ;//new一个并行网关

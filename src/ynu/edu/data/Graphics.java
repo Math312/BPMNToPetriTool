@@ -302,6 +302,7 @@ public class Graphics <T extends GNode> {
    private boolean deleteNodeInHeadNode(HeadNode<? extends GNode> head,String id) 
    {
 	   Node<? extends GNode> nextNode = head.next;
+	   if(nextNode != null){
 	   if(nextNode.id.equals(id)) 
 	   {
 		   head.next = nextNode.next;
@@ -326,8 +327,9 @@ public class Graphics <T extends GNode> {
 			   }
 		   }
 	   }
-	   
+	   }
 	   nextNode = head.pre;
+	   if(nextNode != null){
 	   if(nextNode.id.equals(id)) 
 	   {
 		   head.pre = nextNode.next;
@@ -352,7 +354,7 @@ public class Graphics <T extends GNode> {
 			   }
 		   }
 	   }
-	   
+	   }
 	   return true;
 	   
    }

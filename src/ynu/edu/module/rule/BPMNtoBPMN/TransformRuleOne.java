@@ -13,7 +13,6 @@ import ynu.edu.module.bpmn.StartEvent;
 public class TransformRuleOne extends AbstractRule{
 	
 	
-	Graphics graphics;
 	String startId;//开始事件的ID
 	String idByStart[] ;//存储开始事件之后结点的ID
 	ParallelGateway parallelGateway ;//new一个并行网关
@@ -28,8 +27,6 @@ public class TransformRuleOne extends AbstractRule{
 	public boolean matches(Graphics<BpmnElement> graphics) {
 		allIds = graphics.getIds();
 		startId = allIds.get(StartEvent.class.getName()).getFirst();//To Do得到开始事件的ID
-		
-		
 		idByStart = graphics.getIDbyNode(startId)[0];//得到开始事件之后的id
 		if(idByStart.length > 1)
 		{
