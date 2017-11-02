@@ -47,9 +47,9 @@ public class TransformRuleSix extends AbstractRule{
 		if(allId.get(ExclusiveGateway.class.getName())!=null)
 		{
 			exclusiveGatewayID = allId.get(ExclusiveGateway.class.getName()).toArray(new String[allId.get(ExclusiveGateway.class.getName()).size()]);
-			for (int i = 0 ; i < parallelGatewayID.length; i++)
+			for (int i = 0 ; i < exclusiveGatewayID.length; i++)
 			{
-				IDbyNode = graphics.getIDbyNode(parallelGatewayID[i]);
+				IDbyNode = graphics.getIDbyNode(exclusiveGatewayID[i]);
 				if(IDbyNode[0].length>1 && IDbyNode[1].length>1)
 				{
 					return true;

@@ -38,7 +38,7 @@ public class AnalyzeTool {
 	}
 
 	void AnalyzeBpmn() throws DocumentException {
-		Document doc = new SAXReader().read("TestBpmn\\test.bpmn");
+		Document doc = new SAXReader().read("TestBpmn\\testfile.bpmn");
 		// System.out.println(doc.getRootElement().getName());
 		BPMNData<BpmnElement> data = new BPMNData();
 		new AnalyzeTool().getNodes(doc.getRootElement(), data);
