@@ -30,24 +30,6 @@ public class SequenceFlowRule extends AbstractRule {
 	}
 	
 	/**
-	 * 将Bpmn图中的序列流提取出来，并用链表进行存储并返回
-	 * @param graphics
-	 * @return sequenceflow_nodes
-	 */
-//	@Override
-//	protected LinkedList<String> split(Graphics<BpmnElement> graphics) {
-//		Hashtable<String, LinkedList<String>> bpmn_nodes = graphics.getIds();
-//		LinkedList<String> sequenceflow_nodes;
-//		if (matches(graphics)) {				//	如果存在序列流，则返回含有所有序列流id的链表
-//			sequenceflow_nodes = bpmn_nodes.get(SequenceFlowRule.class.getName());
-//		}
-//		else {									//  如果不存在, 则返回null
-//			sequenceflow_nodes = null;
-//		}
-//		return sequenceflow_nodes;	
-//	}
-	
-	/**
 	 * 将序列流转换为petri网中的元素
 	 * @param graphics, result
 	 * 
@@ -72,8 +54,8 @@ public class SequenceFlowRule extends AbstractRule {
 				String id = sequence_flow.getId();
 				String preNodeID = graphics.getIDbyNode(node)[0][0];
 				String nextNodeID = graphics.getIDbyNode(node)[1][0];
-				PetriElement preNode = (PetriElement)graphics.getNodeData(preNodeID);
-				PetriElement nextNode = (PetriElement)graphics.getNodeData(preNodeID);
+				BpmnElement preNode = (BpmnElement)graphics.getNodeData(preNodeID);
+				BpmnElement nextNode = (BpmnElement)graphics.getNodeData(preNodeID);
 				Place place = new Place("p" + place_id++, id);
 				Arc arc1 = new Arc(preNode.getId() + " to " + place.getId());	
 				Arc arc2 = new Arc(place.getId() + " to " + nextNode.getId());

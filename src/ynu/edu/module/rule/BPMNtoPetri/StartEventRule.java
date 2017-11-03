@@ -33,24 +33,6 @@ public class StartEventRule extends AbstractRule {
 	
 	
 	/**
-	 * 将Bpmn图中的开始事件提取出来，并用链表进行存储并返回
-	 * @param graphics
-	 * @return startevent_nodes
-	 */
-//	@Override
-//	protected LinkedList<String> split(Graphics<BpmnElement> graphics) {
-//		Hashtable<String, LinkedList<String>> bpmn_nodes = graphics.getIds();
-//		LinkedList<String> startevent_nodes;
-//		if (matches(graphics)) {					// 如果存在开始事件，则返回含有所有开始事件id的链表
-//			startevent_nodes = bpmn_nodes.get(StartEvent.class.getName());
-//		}
-//		else {										// 如果不存在，则返回null
-//			startevent_nodes = null;	
-//		}
-//		return startevent_nodes;	
-//	}
-	
-	/**
 	 * 将开始事件转换为petri网中的元素
 	 * @param graphics, result
 	 */
