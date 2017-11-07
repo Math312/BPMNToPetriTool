@@ -14,4 +14,10 @@ public class SequenceFlow extends CommonElement {
 	{
 	    return "Type:"+this.getClass().getName()+"\n id: "+id+"\n inComing: "+inComing+"\n outGoing: "+outGoing+"\n name:"+name;
 	}
+	
+	
+	public String getName() {
+		return name;
+	}
+	
 }

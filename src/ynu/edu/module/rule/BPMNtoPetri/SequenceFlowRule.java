@@ -30,24 +30,6 @@ public class SequenceFlowRule extends AbstractRule {
 	}
 	
 	/**
-	 * 将Bpmn图中的序列流提取出来，并用链表进行存储并返回
-	 * @param graphics
-	 * @return sequenceflow_nodes
-	 */
-//	@Override
-//	protected LinkedList<String> split(Graphics<BpmnElement> graphics) {
-//		Hashtable<String, LinkedList<String>> bpmn_nodes = graphics.getIds();
-//		LinkedList<String> sequenceflow_nodes;
-//		if (matches(graphics)) {				//	如果存在序列流，则返回含有所有序列流id的链表
-//			sequenceflow_nodes = bpmn_nodes.get(SequenceFlowRule.class.getName());
-//		}
-//		else {									//  如果不存在, 则返回null
-//			sequenceflow_nodes = null;
-//		}
-//		return sequenceflow_nodes;	
-//	}
-	
-	/**
 	 * 将序列流转换为petri网中的元素
 	 * @param graphics, result
 	 * 

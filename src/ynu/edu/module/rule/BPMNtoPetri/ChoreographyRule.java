@@ -23,18 +23,6 @@ public class ChoreographyRule extends AbstractRule{
 		return bpmn_nodes.containsKey(EndEvent.class.getName());
 	}
 
-//	protected LinkedList<String> split(Graphics<BpmnElement> graphics) {
-//		Hashtable<String, LinkedList<String>> bpmn_nodes = graphics.getIds();
-//		LinkedList<String> Choreography_nodes;
-//		if (matches(graphics)) {
-//			Choreography_nodes = bpmn_nodes.get(Choreography.class.getName());
-//		}
-//		else {
-//			Choreography_nodes = null;
-//		}
-//		return Choreography_nodes;
-//	}
-
 	@Override
 	public void transfer(Graphics<BpmnElement> graphics, Graphics<PetriElement> result) {
 		Hashtable<String, LinkedList<String>> bpmn_nodes = graphics.getIds();

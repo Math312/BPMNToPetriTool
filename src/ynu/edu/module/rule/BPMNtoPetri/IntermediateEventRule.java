@@ -28,24 +28,6 @@ public class IntermediateEventRule extends AbstractRule {
 	}
 	
 	/**
-	 * 将Bpmn图中的中间事件提取出来，并用链表进行存储并返回
-	 * @param graphics
-	 * @return sequenceflow_nodes
-	 */
-//	@Override
-//	protected LinkedList<String> split(Graphics<BpmnElement> graphics) {
-//		Hashtable<String, LinkedList<String>> bpmn_nodes = graphics.getIds();
-//		LinkedList<String> middleevent_nodes;
-//		if (matches(graphics)) {		//	如果存在中间事件，则返回含有所有序列流id的链表
-//			middleevent_nodes = bpmn_nodes.get(StartEvent.class.getName());
-//		}
-//		else {							//  如果不存在, 则返回null
-//			middleevent_nodes = null;
-//		}
-//		return middleevent_nodes;	
-//	}
-	
-	/**
 	 * 将中间事件转换为petri网中的元素
 	 * @param graphics, result
 	 * 
