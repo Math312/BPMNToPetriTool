@@ -5,5 +5,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/jaxen-1.1-beta-6.jar"/>
+	<classpathentry kind="lib" path="lib/mxgraph-all.jar"/>
+	<classpathentry kind="lib" path="lib/mxgraph-core.jar"/>
+	<classpathentry kind="lib" path="lib/mxgraph-swing.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
