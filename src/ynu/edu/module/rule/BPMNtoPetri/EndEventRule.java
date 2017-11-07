@@ -30,24 +30,6 @@ public class EndEventRule extends AbstractRule {
 	}
 	
 	/**
-	 * 将Bpmn图中的结束事件提取出来，并用链表进行存储并返回
-	 * @param graphics
-	 * @return sequenceflow_nodes
-	 */
-//	@Override
-//	protected LinkedList<String> split(Graphics<BpmnElement> graphics) {
-//		Hashtable<String, LinkedList<String>> bpmn_nodes = graphics.getIds();
-//		LinkedList<String> endevent_nodes;
-//		if (matches(graphics)) {
-//			endevent_nodes = bpmn_nodes.get(EndEvent.class.getName());
-//		}
-//		else {
-//			endevent_nodes = null;
-//		}
-//		return endevent_nodes;
-//	}
-	
-	/**
 	 * 将结束事件转换为petri网中的元素
 	 * @param graphics, result
 	 * 
