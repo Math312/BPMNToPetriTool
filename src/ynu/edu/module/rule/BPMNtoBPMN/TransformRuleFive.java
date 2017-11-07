@@ -30,8 +30,6 @@ public class TransformRuleFive extends AbstractRule{
 				if (c.getParticipants()[0] != null && c.getParticipants()[1] != null){
 					return true;
 				}
-				
-				
 			}
 		}
 		return false;

@@ -26,16 +26,18 @@ public class TransformRuleOne extends AbstractRule{
 	//让新增的结点之间建立联系
 	public boolean matches(Graphics<BpmnElement> graphics) {
 		allIds = graphics.getIds();
-		startId = allIds.get(StartEvent.class.getName()).getFirst();//To Do得到开始事件的ID
-		idByStart = graphics.getIDbyNode(startId)[0];//得到开始事件之后的id
-		if(idByStart.length > 1)
+		if(allIds.get(StartEvent.class.getName())!= null)
 		{
-			return true;			
+			startId = allIds.get(StartEvent.class.getName()).getFirst();// To
+																		// Do得到开始事件的ID
+			idByStart = graphics.getIDbyNode(startId)[0];// 得到开始事件之后的id
+			if (idByStart.length > 1) {
+				return true;
+			} else {
+				return false;
+			}
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 	
 	

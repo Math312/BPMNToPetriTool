@@ -28,16 +28,18 @@ public class TransformRuleTwo extends AbstractRule{
 	@Override
 	public boolean matches(Graphics<BpmnElement> graphics) {
 		allID = graphics.getIds();
-		endId = allID.get(EndEvent.class.getName()).getFirst();//To Do得到结束事件的id
-		IDbyEnd = graphics.getIDbyNode(endId)[1];
-		if(IDbyEnd.length > 1)
+		if(allID.get(EndEvent.class.getName()) != null )
 		{
-			return true;
+			endId = allID.get(EndEvent.class.getName()).getFirst();// To
+																	// Do得到结束事件的id
+			IDbyEnd = graphics.getIDbyNode(endId)[1];
+			if (IDbyEnd.length > 1) {
+				return true;
+			} else {
+				return false;
+			}
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	@Override
