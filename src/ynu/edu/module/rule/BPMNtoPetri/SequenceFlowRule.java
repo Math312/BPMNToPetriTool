@@ -55,7 +55,7 @@ public class SequenceFlowRule extends AbstractRule {
 				String preNodeID = graphics.getIDbyNode(node)[0][0];
 				String nextNodeID = graphics.getIDbyNode(node)[1][0];
 				BpmnElement preNode = (BpmnElement)graphics.getNodeData(preNodeID);
-				BpmnElement nextNode = (BpmnElement)graphics.getNodeData(preNodeID);
+				BpmnElement nextNode = (BpmnElement)graphics.getNodeData(nextNodeID);
 				Place place = new Place("p" + place_id++, id);
 				Arc arc1 = new Arc(preNode.getId() + " to " + place.getId());	
 				Arc arc2 = new Arc(place.getId() + " to " + nextNode.getId());

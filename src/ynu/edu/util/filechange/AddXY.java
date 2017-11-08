@@ -5,8 +5,10 @@ import java.awt.Color;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -37,17 +39,23 @@ import readfromxml.XMLdatafromTransition;
 public class AddXY {
 	public static void main(String args[])throws DocumentException, IOException{
 		// input file
-		File file = new File("F:/2"); 
-        String test[]; 
-        //list()�������Զ�ȡ����ǰ�ļ��������ļ� 
-        test = file.list(); 
-        for (int num = 0; num < test.length; num++) { 
+		
+		addXY("TestXml\\result 1.xml","TestXml\\test 1.xml");
+	}
+
+	public static void addXY(String sour,String dest)throws DocumentException, IOException{
+		// input file
+		//File file = new File("E:\\models\\scalability\\depth"); 
+        //String test[]; 
+        //list()方法可以读取到当前文件的所有文件 
+        //test = file.list(); 
+        //for (int num = 0; num < test.length; num++) { 
            // System.out.println("E:\\models\\bounded-models\\a2\\"+test[num]); 
         
 		ArrayList<Arc> a=new ArrayList<>();
 		ArrayList<Place> p=new ArrayList<>();
 		ArrayList<Transition> t=new ArrayList<>();
-		String S="F:/2/"+test[num];
+		String S=sour;
 		
 		XMLdatafromPlace P=new XMLdatafromPlace(S);// place sets
 		XMLdatafromTransition T=new XMLdatafromTransition(S);// transition sets
@@ -148,11 +156,11 @@ public class AddXY {
 				
 				
 				
-				//��ҳ����
+				//网页制作
 		        Element root = DocumentHelper.createElement("pnml");
 		        Document document = DocumentHelper.createDocument(root);
 		        
-		        //�����ڵ���Ӻ��ӽڵ�  
+		        //给根节点添加孩子节点  
 		        Element element1 = root.addElement("net");  
 		        element1.addAttribute("id", "Net-One").addAttribute("type", "P/T net");  
 
@@ -228,12 +236,13 @@ public class AddXY {
 		    
 		        //save
 		        OutputFormat format = new OutputFormat("    ",true);  
-		        format.setEncoding("GBK");//���ñ����ʽ  
+		        format.setEncoding("UTF-8");//设置编码格式  
 		        // output file
-		        XMLWriter xmlWriter = new XMLWriter(new FileOutputStream("F:/2\\"+test[num]+".xml"),format);  
+		        XMLWriter xmlWriter = new XMLWriter(new FileOutputStream(dest));  
 		      
 		        xmlWriter.write(document);
 		        xmlWriter.close();
-			}
-	}
+			
+	
+}
 }
