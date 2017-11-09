@@ -8,6 +8,8 @@ package ynu.edu.module.bpmn;
 
 import java.util.*;
 
+import ynu.edu.module.petri.PetriElement;
+
 /** @pdOid 1faed1f4-9db2-4b12-87f6-dcb8b0d248f6 */
 public abstract class ArrayElement extends BpmnElement {
 	
@@ -127,5 +129,9 @@ public abstract class ArrayElement extends BpmnElement {
    public String getName() {
 	   return name;
    }
+   
+   public abstract PetriElement getFirstElem();
+   
+   public abstract PetriElement getLastElem();
 
 }

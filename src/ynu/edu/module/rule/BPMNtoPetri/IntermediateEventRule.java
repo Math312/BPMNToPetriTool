@@ -52,8 +52,10 @@ public class IntermediateEventRule extends AbstractRule {
 				
 				/*	根据中间事件的name创建trans并添加 */
 				String name = inter.getName();
-				Transition trans = new Transition("trans " + name + trans_id++, name);
-				result.addNode(trans);
+				String id = inter.getId();
+//				Transition trans = new Transition("trans " + name + trans_id++, name);
+				inter.setTransition(new Transition(id, name));
+				result.addNode(inter.getTransition());
 			}
 		}
 	}

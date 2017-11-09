@@ -15,5 +15,6 @@ public abstract class BpmnElement extends ynu.edu.data.GNode {
    public abstract String getInComing();
 
    public abstract String getOutGoing();
+   
 
 }

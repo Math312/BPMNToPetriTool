@@ -52,13 +52,13 @@ public class SequenceFlowRule extends AbstractRule {
 				/*   创建petri元素  */
 				SequenceFlow sequence_flow = (SequenceFlow)graphics.getNodeData(node);
 				String id = sequence_flow.getId();
-				String preNodeID = graphics.getIDbyNode(node)[0][0];
-				String nextNodeID = graphics.getIDbyNode(node)[1][0];
-				BpmnElement preNode = (BpmnElement)graphics.getNodeData(preNodeID);
-				BpmnElement nextNode = (BpmnElement)graphics.getNodeData(nextNodeID);
+				String preNodeID = graphics.getIDbyNode(node)[1][0];
+				String nextNodeID = graphics.getIDbyNode(node)[0][0];
+				ArrayElement preNode = (ArrayElement)graphics.getNodeData(preNodeID);
+				ArrayElement nextNode = (ArrayElement)graphics.getNodeData(nextNodeID);
 				Place place = new Place("p" + place_id++, id);
-				Arc arc1 = new Arc(preNode.getId() + " to " + place.getId());	
-				Arc arc2 = new Arc(place.getId() + " to " + nextNode.getId());
+				Arc arc1 = new Arc(preNodeID + " to " + place.getId());	
+				Arc arc2 = new Arc(place.getId() + " to " + nextNodeID);
 				
 				/*	添加结点 */
 				result.addNode(arc1);
@@ -66,10 +66,10 @@ public class SequenceFlowRule extends AbstractRule {
 				result.addNode(arc2);
 				
 				/*	添加连接 */
-				result.addLink(preNodeID, arc1.getId());  // 建立前一个结点与arc1的联系
+				result.addLink(preNode.getLastElem().getId(), arc1.getId());      // 建立前一个结点与arc1的联系
 				result.addLink(arc1.getId(), place.getId());					 // 建立arc1与place的联系
 				result.addLink(place.getId(), arc2.getId());					 // 建立place于arc2的联系	
-				result.addLink(arc2.getId(), nextNodeID);	 // 建立arc2与后面结点的联系
+				result.addLink(arc2.getId(), nextNode.getFirstElem().getId());	 // 建立arc2与后面结点的联系
 			}
 		}
 	}

@@ -55,18 +55,23 @@ public class StartEventRule extends AbstractRule {
 				StartEvent start_event = (StartEvent) graphics.getNodeData(node);
 				String id = start_event.getId();
 				String name = start_event.getName();
-				Place place = new Place("p" + place_id++, id);
-				Transition trans = new Transition("trans" + trans_id++, name);
-				Arc arc = new Arc(place.getId() + " to " + trans.getId());
+				start_event.setPlace(new Place("p" + place_id++, id));
+				start_event.setTransition(new Transition(id, name));
+				trans_id++;
+				start_event.setArc(new Arc(start_event.getPlace().getId() + "to " + start_event.getTransition().getId()));
+//				Place place = new Place("p" + place_id++, id);
+//				Transition trans = new Transition(id, name);
+//				Arc arc = new Arc(place.getId() + " to " + trans.getId());
 				
 				/*	添加结点 */
-				result.addNode(place);
-				result.addNode(arc);
-				result.addNode(trans);
+				result.addNode(start_event.getPlace());
+				result.addNode(start_event.getArc());
+				result.addNode(start_event.getTransition());
+				
 				
 				/*	添加连接 */
-				result.addLink(place.getId(), arc.getId());		// 建立place与arc的联系
-				result.addLink(arc.getId(), trans.getId());		// 建立arc与trans的联系
+				result.addLink(start_event.getPlace().getId(), start_event.getArc().getId());		// 建立place与arc的联系
+				result.addLink(start_event.getArc().getId(), start_event.getTransition().getId());		// 建立arc与trans的联系
 			}
 		}
 	}

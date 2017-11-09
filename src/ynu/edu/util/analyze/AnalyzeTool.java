@@ -41,7 +41,7 @@ public class AnalyzeTool {
 	}
 
 	void AnalyzeBpmn() throws DocumentException {
-		Document doc = new SAXReader().read("TestBpmn\\case 2.bpmn");
+		Document doc = new SAXReader().read("TestBpmn\\case 1.bpmn");
 		// System.out.println(doc.getRootElement().getName());
 		BPMNData<BpmnElement> data = new BPMNData();
 		new AnalyzeTool().getNodes(doc.getRootElement(), data);
@@ -99,26 +99,36 @@ public class AnalyzeTool {
 		SequenceFlowRule sequenceFlowRule = new SequenceFlowRule();
 		StartEventRule startEventRule = new StartEventRule();
 		Graphics<PetriElement> g =  new Graphics<>();
-		
+		ParallelGatewayRule parallelGateway = new ParallelGatewayRule();
+		ExclusiveGatewayRule exclusiveGateway = new ExclusiveGatewayRule();
+			
+			if(exclusiveGateway.matches(graphics)) {
+				exclusiveGateway.transfer(graphics, g);
+			}
+			if(parallelGateway.matches(graphics)) 
+			{
+				parallelGateway.transfer(graphics, g);
+			}
+			if(startEventRule.matches(graphics)) 
+			{
+				startEventRule.transfer(graphics, g);
+			}
 			if(choreographyRule.matches(graphics)) 
 			{
 				choreographyRule.transfer(graphics, g);
+			}
+			
+			if(intermediateEventRule.matches(graphics)) 
+			{
+				intermediateEventRule.transfer(graphics, g);
 			}
 			if(endEventRule.matches(graphics)) 
 			{
 				endEventRule.transfer(graphics, g);
 			}
-			if(intermediateEventRule.matches(graphics)) 
-			{
-				intermediateEventRule.transfer(graphics, g);
-			}
 			if(sequenceFlowRule.matches(graphics)) 
 			{
 				sequenceFlowRule.transfer(graphics, g);
-			}
-			if(startEventRule.matches(graphics)) 
-			{
-				startEventRule.transfer(graphics, g);
 			}
 			
 		Hashtable<String,LinkedList<String>> table = g.getIds();

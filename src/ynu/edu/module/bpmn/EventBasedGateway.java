@@ -8,8 +8,14 @@ package ynu.edu.module.bpmn;
 
 import java.util.*;
 
+import ynu.edu.module.petri.PetriElement;
+import ynu.edu.module.petri.Place;
+
 /** @pdOid ad46f155-adf2-4aba-821d-ba4837f3066d */
 public class EventBasedGateway extends ArrayElement {
+	
+	private Place place;
+	
    /** @param id
     * @pdOid 07e08c98-1d16-4fc2-a31a-d985a4c6491b */
    public EventBasedGateway(String id) {
@@ -38,5 +44,23 @@ public class EventBasedGateway extends ArrayElement {
     return sb.toString();
     
    }
+	
+	@Override
+	public PetriElement getFirstElem() {
+		return place;
+	}
+	
+	@Override
+	public PetriElement getLastElem() {
+		return place;
+	}
+
+	public Place getPlace() {
+		return place;
+	}
+
+	public void setPlace(Place place) {
+		this.place = place;
+	}
 
 }

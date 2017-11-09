@@ -34,9 +34,10 @@ public class ParallelGatewayRule extends AbstractRule {
 				ParallelGateway parallel_gateway = (ParallelGateway)graphics.getNodeData(node);
 				String id = parallel_gateway.getId();
 				String name = parallel_gateway.getName();
-				Transition trans = new Transition(id, name);
+//				Transition trans = new Transition(id, name);
+				parallel_gateway.setTransition(new Transition(id, name));
 				trans_id++;
-				result.addNode(trans);
+				result.addNode(parallel_gateway.getTransition());
 			}
 		}
 		

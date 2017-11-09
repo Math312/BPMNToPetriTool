@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import ynu.edu.data.Graphics;
 import ynu.edu.module.bpmn.*;
 import ynu.edu.module.petri.PetriElement;
+import ynu.edu.module.petri.Place;
 import ynu.edu.module.petri.Transition;
 
 public class EventBasedGatewayRule extends AbstractRule {
@@ -32,9 +33,9 @@ public class EventBasedGatewayRule extends AbstractRule {
 				EventBasedGateway eventbased_gateway = (EventBasedGateway)graphics.getNodeData(node);
 				String id = eventbased_gateway.getId();
 				String name = eventbased_gateway.getName();
-				Transition trans = new Transition(id, name);
-				trans_id++;
-				result.addNode(trans);
+//				Transition trans = new Transition(id, name);
+				eventbased_gateway.setPlace(new Place("p" + place_id++, id));
+				result.addNode(eventbased_gateway.getPlace());
 			}
 		}
 	}

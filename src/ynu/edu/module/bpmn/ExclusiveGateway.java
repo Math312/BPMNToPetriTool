@@ -8,8 +8,14 @@ package ynu.edu.module.bpmn;
 
 import java.util.*;
 
+import ynu.edu.module.petri.PetriElement;
+import ynu.edu.module.petri.Transition;
+
 /** @pdOid 4faaa77c-8534-4b62-bf35-3ad9eefd592e */
 public class ExclusiveGateway extends ArrayElement {
+	
+	private Transition transition;
+	
    /** @param id
     * @pdOid 86674916-7b7a-4e6f-a7c9-ad29e3dc5567 */
    public ExclusiveGateway(String id) {
@@ -38,5 +44,23 @@ public class ExclusiveGateway extends ArrayElement {
     return sb.toString();
     
    }
+
+	@Override
+	public PetriElement getFirstElem() {
+		return transition;
+	}
+	
+	@Override
+	public PetriElement getLastElem() {
+		return transition;
+	}
+
+	public Transition getTransition() {
+		return transition;
+	}
+
+	public void setTransition(Transition transition) {
+		this.transition = transition;
+	}
 
 }

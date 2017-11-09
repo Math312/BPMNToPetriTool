@@ -45,9 +45,10 @@ public class ChoreographyRule extends AbstractRule{
 				String participant2 = chore.getParticipants()[1];
 				String id = chore.getId();
 				String name = chore.getName();
-				Transition trans = new Transition(id, name);
+				chore.setTransition(new Transition(id, name));
 				trans_id++;
-				result.addNode(trans);
+				result.addNode(chore.getTransition());
+
 			}
 		}
 	}
