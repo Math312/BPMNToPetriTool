@@ -9,12 +9,13 @@ package ynu.edu.module.bpmn;
 import java.util.*;
 
 import ynu.edu.module.petri.PetriElement;
+import ynu.edu.module.petri.Place;
 import ynu.edu.module.petri.Transition;
 
 /** @pdOid 4faaa77c-8534-4b62-bf35-3ad9eefd592e */
 public class ExclusiveGateway extends ArrayElement {
 	
-	private Transition transition;
+	private Place place;
 	
    /** @param id
     * @pdOid 86674916-7b7a-4e6f-a7c9-ad29e3dc5567 */
@@ -47,20 +48,20 @@ public class ExclusiveGateway extends ArrayElement {
 
 	@Override
 	public PetriElement getFirstElem() {
-		return transition;
+		return place;
 	}
 	
 	@Override
 	public PetriElement getLastElem() {
-		return transition;
+		return place;
 	}
 
-	public Transition getTransition() {
-		return transition;
+	public Place getPlace() {
+		return place;
 	}
 
-	public void setTransition(Transition transition) {
-		this.transition = transition;
+	public void setPlace(Place place) {
+		this.place = place;
 	}
 
 }

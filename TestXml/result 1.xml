@@ -5,7 +5,7 @@
         <token id="Default" enabled="true" red="0" green="0" blue="0"/>
         <place id="p0">
             <name>
-                <value>_5</value>
+                <value>_9</value>
             </name>
             <capacity>
                 <value>0</value>
@@ -21,7 +21,7 @@
         </place>
         <place id="p2">
             <name>
-                <value>_11</value>
+                <value>_13</value>
             </name>
             <capacity>
                 <value>0</value>
@@ -29,7 +29,7 @@
         </place>
         <place id="p3">
             <name>
-                <value>_12</value>
+                <value>_14</value>
             </name>
             <capacity>
                 <value>0</value>
@@ -37,13 +37,101 @@
         </place>
         <place id="p4">
             <name>
-                <value>_13</value>
+                <value>_15</value>
             </name>
             <capacity>
                 <value>0</value>
             </capacity>
         </place>
-        <arc id="p0to _5" target="_5" source="p0">
+        <place id="p5">
+            <name>
+                <value>_16</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="p6">
+            <name>
+                <value>_17</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="p7">
+            <name>
+                <value>_18</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="p8">
+            <name>
+                <value>_19</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="p9">
+            <name>
+                <value>_20</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="p10">
+            <name>
+                <value>_21</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="p11">
+            <name>
+                <value>3</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="p12">
+            <name>
+                <value>6</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="p13">
+            <name>
+                <value>9</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="p14">
+            <name>
+                <value>12</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="p15">
+            <name>
+                <value>15</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <arc id="p0to _9" target="_9" source="p0">
             <capacity>
                 <value>0</value>
             </capacity>
@@ -53,37 +141,157 @@
                 <value>0</value>
             </capacity>
         </arc>
-        <arc id="_5 to p2" target="p2" source="_5">
+        <arc id="_9 to p2" target="p2" source="_9">
             <capacity>
                 <value>0</value>
             </capacity>
         </arc>
-        <arc id="p2 to _2_CT" target="_2_CT" source="p2">
+        <arc id="p2 to 1" target="1" source="p2">
             <capacity>
                 <value>0</value>
             </capacity>
         </arc>
-        <arc id="_2_CT to p3" target="p3" source="_2_CT">
+        <arc id="2 to p3" target="p3" source="2">
             <capacity>
                 <value>0</value>
             </capacity>
         </arc>
-        <arc id="p3 to _6_CT" target="_6_CT" source="p3">
+        <arc id="p3 to _11" target="_11" source="p3">
             <capacity>
                 <value>0</value>
             </capacity>
         </arc>
-        <arc id="_6_CT to p4" target="p4" source="_6_CT">
+        <arc id="_11 to p4" target="p4" source="_11">
             <capacity>
                 <value>0</value>
             </capacity>
         </arc>
-        <arc id="p4 to _10" target="_10" source="p4">
+        <arc id="p4 to 4" target="4" source="p4">
             <capacity>
                 <value>0</value>
             </capacity>
         </arc>
-        <transition id="_5">
+        <arc id="5 to p5" target="p5" source="5">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p5 to _12" target="_12" source="p5">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="_12 to p6" target="p6" source="_12">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p6 to 10" target="10" source="p6">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="11 to p7" target="p7" source="11">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p7 to 13" target="13" source="p7">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="14 to p8" target="p8" source="14">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p8 to _10" target="_10" source="p8">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="_11 to p9" target="p9" source="_11">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p9 to 7" target="7" source="p9">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="8 to p10" target="p10" source="8">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p10 to _12" target="_12" source="p10">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="1 to p11" target="p11" source="1">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p11 to 2" target="2" source="p11">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="4 to p12" target="p12" source="4">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p12 to 5" target="5" source="p12">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="7 to p13" target="p13" source="7">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p13 to 8" target="8" source="p13">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="10 to p14" target="p14" source="10">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p14 to 11" target="11" source="p14">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="13 to p15" target="p15" source="13">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <arc id="p15 to 14" target="14" source="p15">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </arc>
+        <transition id="_11">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="_12">
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="_9">
             <name>
                 <value>start</value>
             </name>
@@ -91,17 +299,81 @@
                 <value>0</value>
             </capacity>
         </transition>
-        <transition id="_2_CT">
+        <transition id="1">
             <name>
-                <value>c_v_order</value>
+                <value>choreography</value>
             </name>
             <capacity>
                 <value>0</value>
             </capacity>
         </transition>
-        <transition id="_6_CT">
+        <transition id="2">
             <name>
-                <value>v_w_shipReq</value>
+                <value>choreography</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="4">
+            <name>
+                <value>choreography</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="5">
+            <name>
+                <value>choreography</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="7">
+            <name>
+                <value>choreography</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="8">
+            <name>
+                <value>choreography</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="10">
+            <name>
+                <value>choreography</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="11">
+            <name>
+                <value>choreography</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="13">
+            <name>
+                <value>choreography</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="14">
+            <name>
+                <value>choreography</value>
             </name>
             <capacity>
                 <value>0</value>

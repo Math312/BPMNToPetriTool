@@ -7,6 +7,7 @@ import ynu.edu.data.Graphics;
 import ynu.edu.module.bpmn.BpmnElement;
 import ynu.edu.module.bpmn.ExclusiveGateway;
 import ynu.edu.module.petri.PetriElement;
+import ynu.edu.module.petri.Place;
 import ynu.edu.module.petri.Transition;
 
 public class ExclusiveGatewayRule extends AbstractRule {
@@ -32,9 +33,8 @@ public class ExclusiveGatewayRule extends AbstractRule {
 				String id = exclusive_gateway.getId();
 				String name = exclusive_gateway.getName();
 //				Transition trans = new Transition(id, name);
-				exclusive_gateway.setTransition(new Transition(id, name));
-				trans_id++;
-				result.addNode(exclusive_gateway.getTransition());
+				exclusive_gateway.setPlace(new Place("p" + place_id++, id));
+				result.addNode(exclusive_gateway.getPlace());
 			}
 		}
 		

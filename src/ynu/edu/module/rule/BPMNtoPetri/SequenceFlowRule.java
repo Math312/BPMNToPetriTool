@@ -56,20 +56,32 @@ public class SequenceFlowRule extends AbstractRule {
 				String nextNodeID = graphics.getIDbyNode(node)[0][0];
 				ArrayElement preNode = (ArrayElement)graphics.getNodeData(preNodeID);
 				ArrayElement nextNode = (ArrayElement)graphics.getNodeData(nextNodeID);
-				Place place = new Place("p" + place_id++, id);
-				Arc arc1 = new Arc(preNodeID + " to " + place.getId());	
-				Arc arc2 = new Arc(place.getId() + " to " + nextNodeID);
 				
-				/*	添加结点 */
-				result.addNode(arc1);
-				result.addNode(place);
-				result.addNode(arc2);
-				
-				/*	添加连接 */
-				result.addLink(preNode.getLastElem().getId(), arc1.getId());      // 建立前一个结点与arc1的联系
-				result.addLink(arc1.getId(), place.getId());					 // 建立arc1与place的联系
-				result.addLink(place.getId(), arc2.getId());					 // 建立place于arc2的联系	
-				result.addLink(arc2.getId(), nextNode.getFirstElem().getId());	 // 建立arc2与后面结点的联系
+				/* EventBasedGateway 特殊处理 */
+//				if (preNode instanceof ExclusiveGateway || nextNode instanceof ExclusiveGateway) {
+//					/*	添加结点 */
+//					Place place = new Place("p" + place_id++, id);
+//					Arc arc = new Arc(preNodeID + "to" + place.getId());
+//					result.addNode(arc);
+//					
+//					/*	添加连接 */
+//					result.addLink(preNode.getLastElem().getId(), arc.getId());
+//					result.addLink(arc.getId(), nextNode.getFirstElem().getId());
+//				} else {
+					/*	添加结点 */
+					Place place = new Place("p" + place_id++, id);
+					Arc arc1 = new Arc(preNodeID + " to " + place.getId());	
+					Arc arc2 = new Arc(place.getId() + " to " + nextNodeID);
+					result.addNode(arc1);
+					result.addNode(place);
+					result.addNode(arc2);
+					
+					/*	添加连接 */
+					result.addLink(preNode.getLastElem().getId(), arc1.getId());     // 建立前一个结点与arc1的联系
+					result.addLink(arc1.getId(), place.getId());					 // 建立arc1与place的联系
+					result.addLink(place.getId(), arc2.getId());					 // 建立place于arc2的联系	
+					result.addLink(arc2.getId(), nextNode.getFirstElem().getId());	 // 建立arc2与后面结点的联系
+//				}
 			}
 		}
 	}

@@ -53,30 +53,18 @@ public class EndEventRule extends AbstractRule {
 				String id = end_event.getId();
 				String name = end_event.getName();
 				/*   创建petri元素  */
-//				Transition trans = new Transition(id, name);
-//				trans_id++;
-//				Place place = new Place("p" + place_id++, id);
-//				Arc arc = new Arc(trans.getId() + " to " + place.getId());
-				
 				end_event.setTransition(new Transition(id, name));
 				trans_id++;
 				end_event.setPlace(new Place("p" + place_id++, id));
 				end_event.setArc(new Arc(end_event.getId() + "to" + end_event.getPlace().getId()));
 				
 				
-				/*	添加结点 */
-//				result.addNode(trans);
-//				result.addNode(arc);
-//				result.addNode(place);
-				
+				/*	添加结点 */		
 				result.addNode(end_event.getTransition());
 				result.addNode(end_event.getArc());
 				result.addNode(end_event.getPlace());
 				
 				/*	添加连接 */
-//				result.addLink(trans.getId(), arc.getId());
-//				result.addLink(arc.getId(), place.getId());
-				
 				result.addLink(end_event.getTransition().getId(), end_event.getArc().getId());
 				result.addLink(end_event.getArc().getId(), end_event.getPlace().getId());
 			}
