@@ -56,7 +56,7 @@ public class EndEventRule extends AbstractRule {
 				end_event.setTransition(new Transition(id, name));
 				trans_id++;
 				end_event.setPlace(new Place("p" + place_id++, id));
-				end_event.setArc(new Arc(end_event.getId() + "to" + end_event.getPlace().getId()));
+				end_event.setArc(new Arc(end_event.getId() + " to " + end_event.getPlace().getId()));
 				
 				
 				/*	添加结点 */		
