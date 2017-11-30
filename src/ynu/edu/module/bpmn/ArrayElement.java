@@ -4,6 +4,12 @@
  * Purpose: Defines the Class GateElement
  ***********************************************************************/
 
+/**
+ * @version: 1.0
+ * 增加了getInComingSize和getOutGoingSize方法，
+ * 用于获取前集和后集的个数。
+ */
+
 package ynu.edu.module.bpmn;
 
 import java.util.*;
@@ -95,6 +101,14 @@ public abstract class ArrayElement extends BpmnElement {
    	   	
    	   	return sb.toString().substring(0,sb.length()-1);
    	}
+   }
+   
+   public int getInComingSize() {
+	   return inComing.size();
+   }
+   
+   public int getOutGoingSize() {
+	   return outGoing.size();
    }
    
    /** @pdOid be68d7e5-7d6c-4f76-b61c-9d0b8c964dfd */

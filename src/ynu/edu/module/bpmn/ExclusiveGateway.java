@@ -7,14 +7,18 @@
 package ynu.edu.module.bpmn;
 
 import java.util.*;
+import ynu.edu.module.petri.*;
 
-import ynu.edu.module.petri.PetriElement;
-import ynu.edu.module.petri.Transition;
+
 
 /** @pdOid 4faaa77c-8534-4b62-bf35-3ad9eefd592e */
 public class ExclusiveGateway extends ArrayElement {
 	
-	private Transition transition;
+	private Place place;
+	private Transition transition1;
+	private Transition transition2;
+	private Arc arc1;
+	private Arc arc2;
 	
    /** @param id
     * @pdOid 86674916-7b7a-4e6f-a7c9-ad29e3dc5567 */
@@ -47,20 +51,52 @@ public class ExclusiveGateway extends ArrayElement {
 
 	@Override
 	public PetriElement getFirstElem() {
-		return transition;
+		return place;
 	}
 	
 	@Override
 	public PetriElement getLastElem() {
-		return transition;
+		return place;
 	}
 
-	public Transition getTransition() {
-		return transition;
+	public Place getPlace() {
+		return place;
 	}
 
-	public void setTransition(Transition transition) {
-		this.transition = transition;
+	public void setPlace(Place place) {
+		this.place = place;
+	}
+
+	public Transition getTransition1() {
+		return transition1;
+	}
+
+	public Transition getTransition2() {
+		return transition2;
+	}
+
+	public void setTransition1(Transition transition1) {
+		this.transition1 = transition1;
+	}
+
+	public void setTransition2(Transition transition2) {
+		this.transition2 = transition2;
+	}
+
+	public Arc getArc1() {
+		return arc1;
+	}
+
+	public Arc getArc2() {
+		return arc2;
+	}
+
+	public void setArc1(Arc arc1) {
+		this.arc1 = arc1;
+	}
+
+	public void setArc2(Arc arc2) {
+		this.arc2 = arc2;
 	}
 
 }

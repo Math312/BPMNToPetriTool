@@ -1,5 +1,6 @@
 package ynu.edu.util.analyze;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -33,6 +34,9 @@ import ynu.edu.module.rule.BPMNtoPetri.*;
 import ynu.edu.util.filechange.AddXY;
 import ynu.edu.util.filechange.FileUtils;
 
+/**
+ * @version 1.0
+ * */
 public class AnalyzeTool {
 
 	public static void main(String[] args) throws DocumentException {
@@ -96,19 +100,12 @@ public class AnalyzeTool {
 		ChoreographyRule choreographyRule  = new ChoreographyRule();
 		EndEventRule endEventRule = new EndEventRule();
 		IntermediateEventRule intermediateEventRule = new IntermediateEventRule();
-		SequenceFlowRule sequenceFlowRule = new SequenceFlowRule();
+		SequenceFlowRule2 sequenceFlowRule = new SequenceFlowRule2();
 		StartEventRule startEventRule = new StartEventRule();
 		Graphics<PetriElement> g =  new Graphics<>();
 		ParallelGatewayRule parallelGateway = new ParallelGatewayRule();
 		ExclusiveGatewayRule exclusiveGateway = new ExclusiveGatewayRule();
 			
-			if(exclusiveGateway.matches(graphics)) {
-				exclusiveGateway.transfer(graphics, g);
-			}
-			if(parallelGateway.matches(graphics)) 
-			{
-				parallelGateway.transfer(graphics, g);
-			}
 			if(startEventRule.matches(graphics)) 
 			{
 				startEventRule.transfer(graphics, g);
@@ -122,6 +119,13 @@ public class AnalyzeTool {
 			{
 				intermediateEventRule.transfer(graphics, g);
 			}
+			if(exclusiveGateway.matches(graphics)) {
+				exclusiveGateway.transfer(graphics, g);
+			}
+			if(parallelGateway.matches(graphics)) 
+			{
+				parallelGateway.transfer(graphics, g);
+			}
 			if(endEventRule.matches(graphics)) 
 			{
 				endEventRule.transfer(graphics, g);
@@ -134,6 +138,7 @@ public class AnalyzeTool {
 		Hashtable<String,LinkedList<String>> table = g.getIds();
 		for(Entry<String,LinkedList<String>> e:table.entrySet()) 
 		{
+			System.out.println(e.getKey());
 			LinkedList<String> s = e.getValue();
 			System.out.println("\n");
 			for(String s1:s) 

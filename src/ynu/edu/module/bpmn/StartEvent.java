@@ -54,8 +54,8 @@ public class StartEvent extends ArrayElement {
 		return transition;
 	}
 	
-	public Arc getLastElem() {
-		return arc;
+	public Transition getLastElem() {
+		return transition;
 	}
 	
 	public Place getFirstElem() {

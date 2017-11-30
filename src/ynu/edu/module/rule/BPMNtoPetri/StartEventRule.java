@@ -58,7 +58,7 @@ public class StartEventRule extends AbstractRule {
 				start_event.setPlace(new Place("p" + place_id++, id));
 				start_event.setTransition(new Transition(id, name));
 				trans_id++;
-				start_event.setArc(new Arc(start_event.getPlace().getId() + "to " + start_event.getTransition().getId()));
+				start_event.setArc(new Arc(start_event.getPlace().getId() + " to " + start_event.getTransition().getId()));
 //				Place place = new Place("p" + place_id++, id);
 //				Transition trans = new Transition(id, name);
 //				Arc arc = new Arc(place.getId() + " to " + trans.getId());
