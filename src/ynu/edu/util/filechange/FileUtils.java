@@ -52,13 +52,11 @@ public class FileUtils {
 					   Element element2 = element.addElement("name");
 					   element2.addElement("value").setText(((Place)g.getNodeData(value)).getName());
 				   }else if("transition".equals(node)){
-<<<<<<< HEAD
 					   if(((Transition)g.getNodeData(value)).getName()!=null) {
-					   Element element2 = element.addElement("name");
-=======
+
 					   if(((Transition)g.getNodeData(value)).getName()!=null){
 						   Element element2 = element.addElement("name");
->>>>>>> 106384dca05ed2127a18d0ffe4188baea1f1098d
+
 					element2.addElement("value").setText(((Transition)g.getNodeData(value)).getName());
 					   }
 				   }else{
@@ -83,4 +81,4 @@ public class FileUtils {
 		xmlWriter.close();
 
 	}
-}
+}}
