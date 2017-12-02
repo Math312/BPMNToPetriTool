@@ -1,7 +1,10 @@
 package ynu.edu.module.rule.BPMNtoPetri;
+/**
+ * Define the rule of EventBasedGateway to petri.
+ * @author Hao
+ */
 
-import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.*;
 
 import ynu.edu.data.Graphics;
 import ynu.edu.module.bpmn.*;
@@ -30,12 +33,18 @@ public class EventBasedGatewayRule extends AbstractRule {
 			return ;
 		} else {
 			for (String node : eventBasedGateway_nodes) {
+				/*	创建petri元素并保存其与bpmn的联系	 */
 				EventBasedGateway eventbased_gateway = (EventBasedGateway)graphics.getNodeData(node);
 				String id = eventbased_gateway.getId();
 				String name = eventbased_gateway.getName();
-//				Transition trans = new Transition(id, name);
-				eventbased_gateway.setPlace(new Place("p" + place_id++, id));
-				result.addNode(eventbased_gateway.getPlace());
+				ArrayList<PetriElement> petris = new ArrayList<>();
+				Place place = new Place("p" + place_id++, id);
+				petris.add(place);
+				BpmnAndPetri e = new BpmnAndPetri(eventbased_gateway, petris);
+				nodes.add(e);
+				
+				/* 添加结点 */
+				result.addNode(place);
 			}
 		}
 	}

@@ -15,10 +15,6 @@ import ynu.edu.module.petri.*;
 public class EndEvent extends ArrayElement {
 	
 	
-	private Place place;
-	private Transition transition;
-	private Arc arc;
-	
    /** outGoing设置为null，name设置为end
     * 
     * 
@@ -32,38 +28,4 @@ public class EndEvent extends ArrayElement {
     super.outGoing = null;
    }
 	
-	@Override
-	public PetriElement getFirstElem() {
-		return transition;
-	}
-	
-	@Override
-	public PetriElement getLastElem() {
-		return place;
-	}
-
-	public Place getPlace() {
-		return place;
-	}
-
-	public Transition getTransition() {
-		return transition;
-	}
-
-	public Arc getArc() {
-		return arc;
-	}
-
-	public void setPlace(Place place) {
-		this.place = place;
-	}
-
-	public void setTransition(Transition transition) {
-		this.transition = transition;
-	}
-
-	public void setArc(Arc arc) {
-		this.arc = arc;
-	}
-   
 }

@@ -1,7 +1,10 @@
 package ynu.edu.module.rule.BPMNtoPetri;
+/**
+ * Define the rule of parralle gateway to petri.
+ * @author Hao
+ */
 
-import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.*;
 
 import ynu.edu.data.Graphics;
 import ynu.edu.module.bpmn.BpmnElement;
@@ -31,13 +34,18 @@ public class ParallelGatewayRule extends AbstractRule {
 			return ;
 		} else {
 			for (String node : parallelGateway_nodes) {
+				/*	创建petri元素并保存其与bpmn的联系	 */
 				ParallelGateway parallel_gateway = (ParallelGateway)graphics.getNodeData(node);
 				String id = parallel_gateway.getId();
 				String name = parallel_gateway.getName();
-//				Transition trans = new Transition(id, name);
-				parallel_gateway.setTransition(new Transition(id, name));
-				trans_id++;
-				result.addNode(parallel_gateway.getTransition());
+				ArrayList<PetriElement> petris = new ArrayList<>();
+				Transition transition = new Transition(id, name);
+				petris.add(transition);
+				BpmnAndPetri e = new BpmnAndPetri(parallel_gateway, petris);
+				nodes.add(e);
+				
+				/* 添加结点 */ 
+				result.addNode(transition);
 			}
 		}
 		

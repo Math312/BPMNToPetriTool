@@ -1,15 +1,13 @@
 /*	ChoreographyRule.java  */
 
 /**
- * Defines the rule of Choreography to petri element.
- * @author 张豪
+ * Define the rule of Choreography to petri element.
+ * @author Hao
  */
-
 
 package ynu.edu.module.rule.BPMNtoPetri;
 
-import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.*;
 
 import ynu.edu.data.Graphics;
 import ynu.edu.module.petri.*;
@@ -38,17 +36,19 @@ public class ChoreographyRule extends AbstractRule{
 		}
 		else {
 			for (String node : Choreography_nodes) {
+				/*	创建petri元素并保存其与bpmn的联系	 */
 				Choreography chore = (Choreography) graphics.getNodeData(node);
-//				String incoming = chore.getInComing();
-//				String outcoming = chore.getOutGoing();
-				String participant1 = chore.getParticipants()[0];
-				String participant2 = chore.getParticipants()[1];
 				String id = chore.getId();
 				String name = chore.getName();
-				chore.setTransition(new Transition(id, name));
+				ArrayList<PetriElement> petris = new ArrayList<>();
+				Transition transition = new Transition(id, name);
 				trans_id++;
-				result.addNode(chore.getTransition());
-
+				petris.add(transition);
+				BpmnAndPetri e = new BpmnAndPetri(chore, petris);
+				nodes.add(e);
+				
+				/* 添加结点 */
+				result.addNode(transition);
 			}
 		}
 	}

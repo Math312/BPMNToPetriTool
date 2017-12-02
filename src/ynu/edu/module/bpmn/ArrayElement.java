@@ -144,8 +144,5 @@ public abstract class ArrayElement extends BpmnElement {
 	   return name;
    }
    
-   public abstract PetriElement getFirstElem();
-   
-   public abstract PetriElement getLastElem();
 
 }

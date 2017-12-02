@@ -1,15 +1,14 @@
 /*	EndEventRule.java  */
 
 /**
- * Defines the rule of endevent to petri element.
- * @author 张豪
+ * Define the rule of endevent to petri element.
+ * @author Hao
  */
 
 
 package ynu.edu.module.rule.BPMNtoPetri;
 
-import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.*;
 import ynu.edu.data.Graphics;
 import ynu.edu.module.petri.*;
 import ynu.edu.module.bpmn.*;
@@ -52,21 +51,25 @@ public class EndEventRule extends AbstractRule {
 				EndEvent end_event = (EndEvent) graphics.getNodeData(node);
 				String id = end_event.getId();
 				String name = end_event.getName();
-				/*   创建petri元素  */
-				end_event.setTransition(new Transition(id, name));
-				trans_id++;
-				end_event.setPlace(new Place("p" + place_id++, id));
-				end_event.setArc(new Arc(end_event.getId() + " to " + end_event.getPlace().getId()));
-				
-				
+				ArrayList<PetriElement> petris = new ArrayList<>();
+				/*   创建petri元素并保存其与bpmn元素之间的联系  */
+				Transition transition = new Transition(id, name);
+				Place place = new Place("p" + place_id++, id);
+				Arc arc = new Arc(transition.getId() + " to " + "p" + (place_id - 1));
+				petris.add(transition);
+				petris.add(arc);
+				petris.add(place);
+				BpmnAndPetri e = new BpmnAndPetri(end_event, petris);
+				nodes.add(e);
+			
 				/*	添加结点 */		
-				result.addNode(end_event.getTransition());
-				result.addNode(end_event.getArc());
-				result.addNode(end_event.getPlace());
+				result.addNode(transition);
+				result.addNode(arc);
+				result.addNode(place);
 				
-				/*	添加连接 */
-				result.addLink(end_event.getTransition().getId(), end_event.getArc().getId());
-				result.addLink(end_event.getArc().getId(), end_event.getPlace().getId());
+				/*	添加在Petri图上的连接 */
+				result.addLink(transition.getId(), arc.getId());
+				result.addLink(arc.getId(), place.getId());
 			}
 		}
 	}

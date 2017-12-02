@@ -1,15 +1,15 @@
-/*	MiddleEventRule.java  */
+/*	IntermediateEventRule.java  */
 
 /**
- * Defines the rule of Middleevent to petri element.
- * @author 张豪
+ * Define the rule of IntermediateEvent to petri element.
+ * @author Hao
  */
 
 
 package ynu.edu.module.rule.BPMNtoPetri;
 
-import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.*;
+
 import ynu.edu.data.Graphics;
 import ynu.edu.module.petri.*;
 import ynu.edu.module.bpmn.*;
@@ -47,15 +47,18 @@ public class IntermediateEventRule extends AbstractRule {
 		}
 		else {
 			for (String node : InterEvent_nodes) {
-				/*	获取中间事件	*/
+				/*	创建petri元素并保存其与bpmn的联系	 */
 				IntermediateThrowEvent inter = (IntermediateThrowEvent) graphics.getNodeData(node);
-				
-				/*	根据中间事件的name创建trans并添加 */
 				String name = inter.getName();
 				String id = inter.getId();
-//				Transition trans = new Transition("trans " + name + trans_id++, name);
-				inter.setTransition(new Transition(id, name));
-				result.addNode(inter.getTransition());
+				ArrayList<PetriElement> petris = new ArrayList<>();
+				Transition transition = new Transition(id, name);
+				petris.add(transition);
+				BpmnAndPetri e = new BpmnAndPetri(inter, petris);
+				nodes.add(e);
+				
+				/* 添加结点 */ 
+				result.addNode(transition);
 			}
 		}
 	}

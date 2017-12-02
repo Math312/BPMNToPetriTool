@@ -1,8 +1,10 @@
 package ynu.edu.module.rule.BPMNtoPetri;
+/**
+ * Define the exclusivegateway to petri.
+ * @author Hao
+ */
 
-import java.util.Hashtable;
-import java.util.LinkedList;
-
+import java.util.*;
 import ynu.edu.data.Graphics;
 import ynu.edu.module.bpmn.BpmnElement;
 import ynu.edu.module.bpmn.ExclusiveGateway;
@@ -29,12 +31,18 @@ public class ExclusiveGatewayRule extends AbstractRule {
 			return ;
 		} else {
 			for (String node : exclusivegateway_nodes) {
+				/*	创建petri元素并保存其与bpmn的联系	 */
 				ExclusiveGateway exclusive_gateway = (ExclusiveGateway)graphics.getNodeData(node);
 				String id = exclusive_gateway.getId();
 				String name = exclusive_gateway.getName();
-//				Transition trans = new Transition(id, name);
-				exclusive_gateway.setPlace(new Place("p" + place_id++, id));
-				result.addNode(exclusive_gateway.getPlace());
+				ArrayList<PetriElement> petris = new ArrayList<PetriElement>();
+				Place place = new Place("p" + place_id++, id);
+				petris.add(place);
+				BpmnAndPetri e = new BpmnAndPetri(exclusive_gateway, petris);
+				nodes.add(e);
+				
+				/* 添加结点 */
+				result.addNode(place);
 			}
 		}
 		

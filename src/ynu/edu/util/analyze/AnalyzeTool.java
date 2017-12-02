@@ -35,6 +35,8 @@ import ynu.edu.util.filechange.AddXY;
 import ynu.edu.util.filechange.FileUtils;
 
 /**
+ * Notice: 如果要按第一套转换规则转换请new SequenceFlowRule, 按第二套转换规则转换请new SequenceFlowRule2, 
+ * 		     且序列流转换必须最后进行.
  * @version 1.0
  * */
 public class AnalyzeTool {
@@ -45,7 +47,7 @@ public class AnalyzeTool {
 	}
 
 	void AnalyzeBpmn() throws DocumentException {
-		Document doc = new SAXReader().read("TestBpmn\\case 1.bpmn");
+		Document doc = new SAXReader().read("TestBpmn\\case 3.bpmn");
 		// System.out.println(doc.getRootElement().getName());
 		BPMNData<BpmnElement> data = new BPMNData();
 		new AnalyzeTool().getNodes(doc.getRootElement(), data);
@@ -100,7 +102,8 @@ public class AnalyzeTool {
 		ChoreographyRule choreographyRule  = new ChoreographyRule();
 		EndEventRule endEventRule = new EndEventRule();
 		IntermediateEventRule intermediateEventRule = new IntermediateEventRule();
-		SequenceFlowRule2 sequenceFlowRule = new SequenceFlowRule2();
+		/* 注意：如果要按第一套转换规则转换请new SequenceFlowRule, 按第二套转换规则转换请new SequenceFlowRule2 */
+		SequenceFlowRule sequenceFlowRule = new SequenceFlowRule();
 		StartEventRule startEventRule = new StartEventRule();
 		Graphics<PetriElement> g =  new Graphics<>();
 		ParallelGatewayRule parallelGateway = new ParallelGatewayRule();

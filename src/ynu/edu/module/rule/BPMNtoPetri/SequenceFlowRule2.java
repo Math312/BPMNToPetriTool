@@ -2,7 +2,8 @@
 
 /**
  * Defines the rule of sequenceflow to petri element.
- * @author 张豪
+ * Notice: 该规则适用于第二套转换规则.
+ * @author Hao
  */
 
 package ynu.edu.module.rule.BPMNtoPetri;
@@ -55,86 +56,105 @@ public class SequenceFlowRule2 extends AbstractRule {
 				String name = sequence_flow.getName();
 				String preNodeID = graphics.getIDbyNode(node)[1][0];
 				String nextNodeID = graphics.getIDbyNode(node)[0][0];
-				ArrayElement preNode = (ArrayElement)graphics.getNodeData(preNodeID);
-				ArrayElement nextNode = (ArrayElement)graphics.getNodeData(nextNodeID);
-				
-				if (preNode instanceof ExclusiveGateway) {
-					preNode = (ExclusiveGateway)preNode;
+				BpmnAndPetri preNode = null;
+				BpmnAndPetri nextNode = null;
+				for (int i = 0; i < nodes.size(); i++) {
+					if (preNodeID == nodes.get(i).getBpmnId()) {
+						preNode = nodes.get(i);
+					}
+					if (nextNodeID == nodes.get(i).getBpmnId()) {
+						nextNode = nodes.get(i);
+					}
+ 				}
+			
+				if (preNode.getBpmnElem() instanceof ExclusiveGateway) {
+					ExclusiveGateway preBpmnNode = (ExclusiveGateway)preNode.getBpmnElem();
 					
 					/* 对应PPT中Decision中的y1, y2的情况 */
-					if (preNode.getOutGoingSize() > 1) {
-						/* 添加结点  */
-						sequence_flow.setTransition(new Transition(id, name));
-						trans_id++;
-						sequence_flow.setPlace(new Place("p" + place_id++, id));
-						sequence_flow.setArc1(new Arc(preNode.getLastElem().getId() + " to " + sequence_flow.getTransition().getId()));
-						sequence_flow.setArc2(new Arc(sequence_flow.getTransition().getId() + " to " + sequence_flow.getPlace().getId()));
-						sequence_flow.setArc3(new Arc(sequence_flow.getPlace().getId() + " to " + nextNode.getFirstElem().getId()));
-						result.addNode(sequence_flow.getTransition());
-						result.addNode(sequence_flow.getPlace());
-						result.addNode(sequence_flow.getArc1());
-						result.addNode(sequence_flow.getArc2());
-						result.addNode(sequence_flow.getArc3());
+					if (preBpmnNode.getOutGoingSize() > 1) {
+						/*	创建petri元素 */
+						Transition transition = new Transition(id, name);
+						Place place = new Place("p" + place_id++, id);
+						Arc arc1 = new Arc(preNode.getLastElem().getId() + " to " + transition.getId());
+						Arc arc2 = new Arc(transition.getId() + " to " + place.getId());
+						Arc arc3 = new Arc(place.getId() + " to " + nextNode.getLastElem().getId());
 						
-						/* 添加连接 */
-						result.addLink(preNode.getLastElem().getId(), sequence_flow.getArc1().getId());
-						result.addLink(sequence_flow.getArc1().getId(), sequence_flow.getTransition().getId());
-						result.addLink(sequence_flow.getTransition().getId(), sequence_flow.getArc2().getId());
-						result.addLink(sequence_flow.getArc2().getId(), sequence_flow.getPlace().getId());
-						result.addLink(sequence_flow.getPlace().getId(), sequence_flow.getArc3().getId());
-						result.addLink(sequence_flow.getArc3().getId(), nextNode.getFirstElem().getId());
+						/* 添加结点 */
+						result.addNode(transition);
+						result.addNode(place);
+						result.addNode(arc1);
+						result.addNode(arc2);
+						result.addNode(arc3);
+						
+						/* 建立在Petri图上的连接 */
+						result.addLink(preNode.getLastElem().getId(), arc1.getId());
+						result.addLink(arc1.getId(), transition.getId());
+						result.addLink(transition.getId(), arc2.getId());
+						result.addLink(arc2.getId(), place.getId());
+						result.addLink(place.getId(), arc3.getId());
+						result.addLink(arc3.getId(), nextNode.getFirstElem().getId());
 					} 
 					/* 对应PPT中Merge中的y的情况 */
-					else if (preNode.getOutGoingSize() == 1) {	
-						/* 添加结点 */
-						sequence_flow.setArc(new Arc(preNode.getLastElem().getId() + " to " + nextNode.getFirstElem().getId()));
-						result.addNode(sequence_flow.getArc());
+					else if (preBpmnNode.getOutGoingSize() == 1) {	
+						/* 创建并添加结点 */
+						Arc arc = new Arc(preNode.getLastElem().getId() + " to " + nextNode.getFirstElem().getId());
+						result.addNode(arc);
 						
-						result.addLink(preNode.getLastElem().getId(), sequence_flow.getArc().getId());
-						result.addLink(sequence_flow.getArc().getId(), nextNode.getFirstElem().getId());
+						/* 建立在Petri图上的连接 */
+						result.addLink(preNode.getLastElem().getId(), arc.getId());
+						result.addLink(arc.getId(), nextNode.getFirstElem().getId());
 					}
 				}
-				else if(nextNode instanceof ExclusiveGateway) {
+				else if(nextNode.getBpmnElem() instanceof ExclusiveGateway) {
 					/* 对应PPT中Merge中x1 x2的情况 */
-					if (nextNode.getInComingSize() > 1) {
-						sequence_flow.setTransition(new Transition(id, name));
-						trans_id++;
-						sequence_flow.setPlace(new Place("p" + place_id++, id));
-						sequence_flow.setArc1(new Arc(preNode.getLastElem().getId() + " to " + sequence_flow.getPlace().getId()));
-						sequence_flow.setArc2(new Arc(sequence_flow.getPlace().getId() + " to " + sequence_flow.getTransition().getId()));
-						sequence_flow.setArc3(new Arc(sequence_flow.getTransition().getId() + " to " + nextNode.getFirstElem().getId()));
-						result.addNode(sequence_flow.getTransition());
-						result.addNode(sequence_flow.getPlace());
-						result.addNode(sequence_flow.getArc1());
-						result.addNode(sequence_flow.getArc2());
-						result.addNode(sequence_flow.getArc3());
+					ExclusiveGateway nextBpmnNode = (ExclusiveGateway)nextNode.getBpmnElem();
+					if (nextBpmnNode.getInComingSize() > 1) {						
+						Transition transition = new Transition(id, name);
+						Place place = new Place("p" + place_id++, id);
+						Arc arc1 = new Arc(preNode.getLastElem().getId() + " to " + place.getId());
+						Arc arc2 = new Arc(place.getId() + " to " + transition.getId());
+						Arc arc3 = new Arc(transition.getId() + " to " + nextNode.getFirstElem().getId());
+						result.addNode(transition);
+						result.addNode(place);
+						result.addNode(arc1);
+						result.addNode(arc2);
+						result.addNode(arc3);
 						
-						/* 添加连接 */
-						result.addLink(preNode.getLastElem().getId(), sequence_flow.getArc1().getId());
-						result.addLink(sequence_flow.getArc1().getId(), sequence_flow.getTransition().getId());
-						result.addLink(sequence_flow.getTransition().getId(), sequence_flow.getArc2().getId());
-						result.addLink(sequence_flow.getArc2().getId(), sequence_flow.getPlace().getId());
-						result.addLink(sequence_flow.getPlace().getId(), sequence_flow.getArc3().getId());
-						result.addLink(sequence_flow.getArc3().getId(), nextNode.getFirstElem().getId());		
+						/* 建立在Petri图上的连接 */
+						result.addLink(preNode.getLastElem().getId(), arc1.getId());
+						result.addLink(arc1.getId(), transition.getId());
+						result.addLink(transition.getId(), arc2.getId());
+						result.addLink(arc2.getId(), place.getId());
+						result.addLink(place.getId(), arc3.getId());
+						result.addLink(arc3.getId(), nextNode.getFirstElem().getId());
 					} 
 					/* 对应PPT中Decision中的x的情况 */
-					else if (nextNode.getInComingSize() == 1) {
-						sequence_flow.setArc(new Arc(preNode.getLastElem().getId() + " to " + nextNode.getFirstElem().getId()));
-						result.addNode(sequence_flow.getArc());
-						result.addLink(preNode.getLastElem().getId(), sequence_flow.getArc().getId());
-						result.addLink(sequence_flow.getArc().getId(), nextNode.getFirstElem().getId());
+					else if (nextBpmnNode.getInComingSize() == 1) {
+
+						/* 创建并添加Petri结点 */
+						Arc arc = new Arc(preNode.getLastElem().getId() + " to " + nextNode.getFirstElem().getId());
+						result.addNode(arc);
+						
+						/* 建立在Petri图上的连接 */
+						result.addLink(preNode.getLastElem().getId(), arc.getId());
+						result.addLink(arc.getId(), nextNode.getFirstElem().getId());
 					} 
-				} else {
-					sequence_flow.setPlace(new Place("p" + place_id++, id));
-					sequence_flow.setArc1(new Arc(preNodeID + " to " + sequence_flow.getPlace().getId()));
-					sequence_flow.setArc2(new Arc(sequence_flow.getPlace().getId() + " to " + nextNodeID));
-					result.addNode(sequence_flow.getArc1());
-					result.addNode(sequence_flow.getPlace());
-					result.addNode(sequence_flow.getArc2());
-					result.addLink(preNode.getLastElem().getId(), sequence_flow.getArc1().getId());
-					result.addLink(sequence_flow.getArc1().getId(), sequence_flow.getPlace().getId());
-					result.addLink(sequence_flow.getPlace().getId(), sequence_flow.getArc2().getId());
-					result.addLink(sequence_flow.getArc2().getId(), nextNode.getFirstElem().getId());
+				}
+				/* 普通序列流处理 */
+				else {
+					/* 创建并添加Petri结点 */ 
+					Place place = new Place("p" + place_id++, id);
+					Arc arc1 = new Arc(preNode.getLastElem().getId() + " to " + place.getId());
+					Arc arc2 = new Arc(place.getId() + " to " + nextNode.getFirstElem().getId());
+					result.addNode(place);
+					result.addNode(arc1);
+					result.addNode(arc2);
+					
+					/* 建立在Petri图上的连接 */ 
+					result.addLink(preNode.getLastElem().getId(), arc1.getId());
+					result.addLink(arc1.getId(), place.getId());
+					result.addLink(place.getId(), arc2.getId());
+					result.addLink(arc2.getId(), nextNode.getFirstElem().getId());
 				}
 			}
 		}

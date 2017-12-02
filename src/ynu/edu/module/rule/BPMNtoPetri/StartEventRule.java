@@ -1,15 +1,13 @@
 /*	StartEventRule.java  */
 
 /**
- * Defines the rule of startevent to petri element.
- * @author 张豪
+ * Define the rule of startevent to petri element.
+ * @author Hao
  */
  
 package ynu.edu.module.rule.BPMNtoPetri;
 
-import java.util.Hashtable;
-import java.util.LinkedList;
-
+import java.util.*;
 import ynu.edu.data.Graphics;
 import ynu.edu.module.bpmn.BpmnElement;
 import ynu.edu.module.bpmn.StartEvent;
@@ -51,27 +49,28 @@ public class StartEventRule extends AbstractRule {
 		}
 		else {
 			for (String node : startevent_nodes) {
-				/*		创建petri元素	 */
+				/*	创建petri元素并保存其与bpmn的联系	 */
 				StartEvent start_event = (StartEvent) graphics.getNodeData(node);
 				String id = start_event.getId();
 				String name = start_event.getName();
-				start_event.setPlace(new Place("p" + place_id++, id));
-				start_event.setTransition(new Transition(id, name));
-				trans_id++;
-				start_event.setArc(new Arc(start_event.getPlace().getId() + " to " + start_event.getTransition().getId()));
-//				Place place = new Place("p" + place_id++, id);
-//				Transition trans = new Transition(id, name);
-//				Arc arc = new Arc(place.getId() + " to " + trans.getId());
+				ArrayList<PetriElement> petris = new ArrayList<>();
+				Place place = new Place("p" + place_id++, id);		// Place元素用"p" + place_id作为id, bpmn的id作为name
+				Transition transition = new Transition(id, name);	// Transition直接使用bpmn元素的id和name作为其id和name 
+				Arc arc = new Arc(place.getId() + " to " + id);		// Arc使用前一个Petri元素的id " to " 后一个Petri元素的id作为其id
+				petris.add(place);
+				petris.add(arc);
+				petris.add(transition);
+				BpmnAndPetri e = new BpmnAndPetri(start_event, petris);
+				nodes.add(e);
 				
 				/*	添加结点 */
-				result.addNode(start_event.getPlace());
-				result.addNode(start_event.getArc());
-				result.addNode(start_event.getTransition());
+				result.addNode(place);
+				result.addNode(arc);
+				result.addNode(transition);
 				
-				
-				/*	添加连接 */
-				result.addLink(start_event.getPlace().getId(), start_event.getArc().getId());		// 建立place与arc的联系
-				result.addLink(start_event.getArc().getId(), start_event.getTransition().getId());		// 建立arc与trans的联系
+				/*	建立在Petri图上的连接 */
+				result.addLink(place.getId(), arc.getId());
+				result.addLink(arc.getId(), transition.getId());
 			}
 		}
 	}

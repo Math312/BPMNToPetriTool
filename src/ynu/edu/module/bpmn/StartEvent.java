@@ -18,13 +18,6 @@ import ynu.edu.module.petri.Transition;
 /** @pdOid a4f9d16f-649c-4846-a3fd-9dfcc1209797 */
 public class StartEvent extends ArrayElement {
 	
-	private Place place;
-	private Arc arc;
-	private Transition transition;
-	
-	
-	
-	
 	/** 设置name为start，inComing参数为null
     * 
     * @param id 
@@ -41,37 +34,5 @@ public class StartEvent extends ArrayElement {
    public String toString() {
     return "Type:"+this.getClass().getName()+"\n id: "+id+"\n inComing: "+inComing+"\n outGoing: "+outGoing+"\n name:"+name;
    }
-
-	public Place getPlace() {
-		return place;
-	}
-	
-	public Arc getArc() {
-		return arc;
-	}
-	
-	public Transition getTransition() {
-		return transition;
-	}
-	
-	public Transition getLastElem() {
-		return transition;
-	}
-	
-	public Place getFirstElem() {
-		return place;
-	}
-	
-	public void setPlace(Place place) {
-		this.place = place;
-	}
-	
-	public void setArc(Arc arc) {
-		this.arc = arc;
-	}
-	
-	public void setTransition(Transition trans) {
-		this.transition = trans;
-	}
 
 }

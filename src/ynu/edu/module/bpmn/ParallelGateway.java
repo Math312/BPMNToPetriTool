@@ -14,8 +14,6 @@ import ynu.edu.module.petri.Transition;
 /** @pdOid 4e89ccaf-b71a-4a39-ae25-a5c0cc77138e */
 public class ParallelGateway extends ArrayElement {
 	
-	private Transition transition;
-	
    /** @param id
     * @pdOid 26caa8d9-997b-487a-b345-6b26a9cf2ee3 */
    public ParallelGateway(String id) {
@@ -44,23 +42,5 @@ public class ParallelGateway extends ArrayElement {
     return sb.toString();
     
    }
-
-	@Override
-	public PetriElement getFirstElem() {
-		return transition;
-	}
-	
-	@Override
-	public PetriElement getLastElem() {
-		return transition;
-	}
-
-	public Transition getTransition() {
-		return transition;
-	}
-
-	public void setTransition(Transition transition) {
-		this.transition = transition;
-	}
-
+   
 }
