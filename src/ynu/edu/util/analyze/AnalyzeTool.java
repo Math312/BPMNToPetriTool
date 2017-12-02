@@ -35,129 +35,17 @@ import ynu.edu.util.filechange.AddXY;
 import ynu.edu.util.filechange.FileUtils;
 
 /**
- * Notice: 如果要按第一套转换规则转换请new SequenceFlowRule, 按第二套转换规则转换请new SequenceFlowRule2, 
- * 		     且序列流转换必须最后进行.
  * @version 1.0
  * */
 public class AnalyzeTool {
 
-	public static void main(String[] args) throws DocumentException {
-		new AnalyzeTool().AnalyzeBpmn();
-
-	}
-
-	void AnalyzeBpmn() throws DocumentException {
-		Document doc = new SAXReader().read("TestBpmn\\case 3.bpmn");
+	public Graphics AnalyzeBpmn(String inputName) throws DocumentException {
+		Document doc = new SAXReader().read(inputName);
 		// System.out.println(doc.getRootElement().getName());
 		BPMNData<BpmnElement> data = new BPMNData();
 		new AnalyzeTool().getNodes(doc.getRootElement(), data);
 		Graphics<BpmnElement> graphics = new Graphics<>(data);
-
-		
-		TransformRuleOne t1 = new TransformRuleOne();
-		TransformRuleTwo t2 = new TransformRuleTwo();
-		TransformRuleThree t3 = new TransformRuleThree();
-		TransformRuleFour t4 = new TransformRuleFour();
-		TransformRuleFive t5 = new TransformRuleFive();
-		TransformRuleSix t6 = new TransformRuleSix();
-		TransformRuleSeven t7 = new TransformRuleSeven();
-		
-		while(true) 
-		{
-			if(t1.matches(graphics)) 
-			{
-				t1.transfer(graphics);
-			}
-			else if(t2.matches(graphics)) 
-			{
-				t2.transfer(graphics);
-			}
-			else if(t3.matches(graphics)) 
-			{
-				t3.transfer(graphics);
-			}
-			else if(t4.matches(graphics)) 
-			{
-				t4.transfer(graphics);
-			}
-			else if(t5.matches(graphics))
-			{
-				t5.transfer(graphics);
-			}	
-			else if(t6.matches(graphics)) 
-			{
-				t6.transfer(graphics);
-			}
-			else if(t7.matches(graphics)) 
-			{
-				t7.transfer(graphics);
-			}
-			else 
-			{
-				break;
-			}
-		}
-		graphics.getIds();
-		boolean label = true;
-		ChoreographyRule choreographyRule  = new ChoreographyRule();
-		EndEventRule endEventRule = new EndEventRule();
-		IntermediateEventRule intermediateEventRule = new IntermediateEventRule();
-		/* 注意：如果要按第一套转换规则转换请new SequenceFlowRule, 按第二套转换规则转换请new SequenceFlowRule2 */
-		SequenceFlowRule sequenceFlowRule = new SequenceFlowRule();
-		StartEventRule startEventRule = new StartEventRule();
-		Graphics<PetriElement> g =  new Graphics<>();
-		ParallelGatewayRule parallelGateway = new ParallelGatewayRule();
-		ExclusiveGatewayRule exclusiveGateway = new ExclusiveGatewayRule();
-			
-			if(startEventRule.matches(graphics)) 
-			{
-				startEventRule.transfer(graphics, g);
-			}
-			if(choreographyRule.matches(graphics)) 
-			{
-				choreographyRule.transfer(graphics, g);
-			}
-			
-			if(intermediateEventRule.matches(graphics)) 
-			{
-				intermediateEventRule.transfer(graphics, g);
-			}
-			if(exclusiveGateway.matches(graphics)) {
-				exclusiveGateway.transfer(graphics, g);
-			}
-			if(parallelGateway.matches(graphics)) 
-			{
-				parallelGateway.transfer(graphics, g);
-			}
-			if(endEventRule.matches(graphics)) 
-			{
-				endEventRule.transfer(graphics, g);
-			}
-			if(sequenceFlowRule.matches(graphics)) 
-			{
-				sequenceFlowRule.transfer(graphics, g);
-			}
-			
-		Hashtable<String,LinkedList<String>> table = g.getIds();
-		for(Entry<String,LinkedList<String>> e:table.entrySet()) 
-		{
-			System.out.println(e.getKey());
-			LinkedList<String> s = e.getValue();
-			System.out.println("\n");
-			for(String s1:s) 
-			{
-				System.out.print(s1+"      ");
-			}
-		}
-		
-		try {
-			FileUtils.BPMNtoEasyXml(g, "TestXml\\result 1.xml");
-			AddXY.addXY("TestXml\\result 1.xml", "TestXml\\result 2.xml");
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
+		return graphics;
 	}
 
 	public BPMNData getNodes(final Element node, BPMNData bpmnData) {

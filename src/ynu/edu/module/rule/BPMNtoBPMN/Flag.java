@@ -5,6 +5,6 @@ public class Flag {
 	public static String getID()
 	{
 		flag = flag +1;
-		return ""+flag;
+		return "A_"+flag;
 	}
 }
