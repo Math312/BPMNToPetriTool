@@ -40,10 +40,11 @@ import ynu.edu.util.filechange.FileUtils;
 public class AnalyzeTool {
 
 	public Graphics AnalyzeBpmn(String inputName) throws DocumentException {
+		System.out.println(inputName);
 		Document doc = new SAXReader().read(inputName);
 		// System.out.println(doc.getRootElement().getName());
 		BPMNData<BpmnElement> data = new BPMNData();
-		new AnalyzeTool().getNodes(doc.getRootElement(), data);
+		getNodes(doc.getRootElement(), data);
 		Graphics<BpmnElement> graphics = new Graphics<>(data);
 		return graphics;
 	}
@@ -160,7 +161,11 @@ public class AnalyzeTool {
 		}
 
 		return bpmnData;
+	}		
+		public static void main(String [] args) throws DocumentException 
+		{
+			System.out.println(new AnalyzeTool().AnalyzeBpmn("D:\\Code\\Git\\BPMNTool2\\TestBpmn\\case 1.bpmn"));
+		}
 
-	}
 	
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pnml>
+    <net id="Net-One" type="P/T net">
+        <token id="Default" enabled="true" red="0" green="0" blue="0"/>
+        <place id="p5">
+            <name>
+                <value>_5</value>
+            </name>
+        </place>
+        <place id="p6">
+            <name>
+                <value>_10</value>
+            </name>
+        </place>
+        <place id="p7">
+            <name>
+                <value>_11</value>
+            </name>
+        </place>
+        <place id="p8">
+            <name>
+                <value>_12</value>
+            </name>
+        </place>
+        <place id="p9">
+            <name>
+                <value>_13</value>
+            </name>
+        </place>
+        <arc id="p5 to _5"/>
+        <arc id="_10 to p6"/>
+        <arc id="_5 to p7"/>
+        <arc id="p7 to _2_CT"/>
+        <arc id="_2_CT to p8"/>
+        <arc id="p8 to _6_CT"/>
+        <arc id="_6_CT to p9"/>
+        <arc id="p9 to _10"/>
+        <transition id="_5">
+            <name>
+                <value>start</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="_2_CT">
+            <name>
+                <value>c_v_order</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="_6_CT">
+            <name>
+                <value>v_w_shipReq</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+        <transition id="_10">
+            <name>
+                <value>end</value>
+            </name>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </transition>
+    </net>
+</pnml>

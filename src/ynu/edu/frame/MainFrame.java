@@ -144,6 +144,24 @@ public class MainFrame {
 		panel_1.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Rule1");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(inputFilePath == null) 
+				{
+					JOptionPane.showMessageDialog(null, "Please choose a file to be the input!","ERROR",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(outputFilePath == null) 
+				{
+					JOptionPane.showMessageDialog(null, "Please choose a file-name to save the output!","ERROR",JOptionPane.ERROR_MESSAGE);
+				}
+				else 
+				{
+					Main main = new Main(new TransferByRule1());
+					main.transfer(inputFilePath, outputFilePath);
+					JOptionPane.showMessageDialog(null, "Successful transformation!","Tip",JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		btnNewButton_2.setBounds(80, 149, 113, 27);
 		panel_1.add(btnNewButton_2);
 		
@@ -175,20 +193,7 @@ public class MainFrame {
 		btnNewButton_4.setMinimumSize(new Dimension(0, 0));
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(inputFilePath == null) 
-				{
-					JOptionPane.showMessageDialog(null, "Please choose a file to be the input!","ERROR",JOptionPane.ERROR_MESSAGE);
-				}
-				else if(outputFilePath == null) 
-				{
-					JOptionPane.showMessageDialog(null, "Please choose a file-name to save the output!","ERROR",JOptionPane.ERROR_MESSAGE);
-				}
-				else 
-				{
-					Main main = new Main(new TransferByRule1());
-					main.transfer(inputFilePath, outputFilePath);
-					JOptionPane.showMessageDialog(null, "Successful transformation!","Tip",JOptionPane.INFORMATION_MESSAGE);
-				}
+				
 			}
 		});
 		btnNewButton_4.setBounds(514, 165, 26, 27);

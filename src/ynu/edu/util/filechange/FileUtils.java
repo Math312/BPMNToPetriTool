@@ -52,11 +52,8 @@ public class FileUtils {
 					   Element element2 = element.addElement("name");
 					   element2.addElement("value").setText(((Place)g.getNodeData(value)).getName());
 				   }else if("transition".equals(node)){
-					   if(((Transition)g.getNodeData(value)).getName()!=null) {
-
 					   if(((Transition)g.getNodeData(value)).getName()!=null){
 						   Element element2 = element.addElement("name");
-
 					element2.addElement("value").setText(((Transition)g.getNodeData(value)).getName());
 					   }
 				   }else{
@@ -81,4 +78,4 @@ public class FileUtils {
 		xmlWriter.close();
 
 	}
-}}
+}
