@@ -16,7 +16,7 @@ public class TransferByRule2 implements TransferInterface{
 		StartEventRule startEventRule = new StartEventRule();
 		Graphics<PetriElement> g =  new Graphics<>();
 		ParallelGatewayRule parallelGateway = new ParallelGatewayRule();
-		ExclusiveGatewayRule2 exclusiveGateway = new ExclusiveGatewayRule2();
+		ExclusiveGatewayRule exclusiveGateway = new ExclusiveGatewayRule();
 			
 			if(startEventRule.matches(graphics)) 
 			{
