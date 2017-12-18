@@ -48,7 +48,7 @@ public class TransformRuleTwo extends AbstractRule{
 		
 		graphics.removeNode(endId);	
 		
-		endEvent = new EndEvent("endId");
+		endEvent = new EndEvent(endId);
 		graphics.addNode(endEvent);
 		
 		exclusiveGateway = new ExclusiveGateway(Flag.getID());

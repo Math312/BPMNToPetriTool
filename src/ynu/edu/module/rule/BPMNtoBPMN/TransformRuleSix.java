@@ -95,7 +95,7 @@ public class TransformRuleSix extends AbstractRule{
 				graphics.addNode(sequenceFlow);
 				graphics.addLink(parallelGateway1.getId(), sequenceFlow.getId());
 				graphics.addLink(sequenceFlow.getId(),parallelGateway2.getId());
-				
+				return null;
 				
 			}
 		}
@@ -135,8 +135,9 @@ public class TransformRuleSix extends AbstractRule{
 				
 				graphics.addLink(exclusiveGateway1.getId(), sequenceFlow.getId());
 				graphics.addLink(sequenceFlow.getId(),exclusiveGateway2.getId());
-				
+				return null;
 			}	
+			
 		}
 		return null;
 	}

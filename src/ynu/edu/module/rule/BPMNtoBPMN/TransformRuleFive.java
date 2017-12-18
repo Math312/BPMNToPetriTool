@@ -28,8 +28,9 @@ public class TransformRuleFive extends AbstractRule{
 			choreographyID = allID.get(Choreography.class.getName()).toArray(new String[allID.get(Choreography.class.getName()).size()]);
 			associationID = allID.get(Association.class.getName()).toArray(new String[allID.get(Association.class.getName()).size()]);
 			for (int i = 0; i < choreographyID.length; i++){
+				judge = 0;
 				for (int j = 0; j < associationID.length; j++){
-					GNode g = graphics.getNodeData(associationID[i]);
+					GNode g = graphics.getNodeData(associationID[j]);
 					Association c = (Association)g;
 					if (c.getOutGoing().equals(choreographyID[i])){
 						judge++;
@@ -87,11 +88,11 @@ public class TransformRuleFive extends AbstractRule{
 				{
 					graphics.addLink(IDbyNode[1][j], choreographyOne.getId() );
 				}
-				for(int j = 0 ; j < IDbyNode[1].length; j++)
+				for(int j = 0 ; j < IDbyNode[0].length; j++)
 				{
 					graphics.addLink(choreographyTwo.getId(),IDbyNode[0][j]);
 				}
-				
+				return null;
 				
 			}
 		}

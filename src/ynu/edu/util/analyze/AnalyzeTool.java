@@ -90,7 +90,7 @@ public class AnalyzeTool {
 			// System.out.println(nodename+id+incoming+outgoing+"");
 		}
 		// 判断网关类型并存储
-		else if ("choreographyTask".equals(node.getName()) || "startEvent".equals(node.getName())
+		else if ("choreographyTask".equals(node.getName()) || "startEvent".equals(node.getName())||"intermediateCatchEvent".equals(node.getName())
 				|| "endEvent".equals(node.getName()) || "eventBasedGateway".equals(node.getName())
 				|| "exclusiveGateway".equals(node.getName())|| "parallelGateway".equals(node.getName())|| "intermediateThrowEvent".equals(node.getName())) {
 			ArrayElement arrayElement = null;
@@ -131,13 +131,11 @@ public class AnalyzeTool {
 				arrayElement = new StartEvent(id);
 			} else if ("endEvent".equals(node.getName())) {
 				arrayElement = new EndEvent(id);
-			}else if ("eventBasedGateway".equals(node.getName())) {
-				arrayElement = new EventBasedGateway(id);
-			}else if ("exclusiveGateway".equals(node.getName())) {
-				arrayElement = new ExclusiveGateway(id);
 			}else if ("parallelGateway".equals(node.getName())) {
 				arrayElement = new ParallelGateway(id);
-			}else if ("intermediateThrowEvent".equals(node.getName())) {
+			}else if ("exclusiveGateway".equals(node.getName())||"eventBasedGateway".equals(node.getName())) {
+				arrayElement = new ExclusiveGateway(id);
+			}else if ("intermediateThrowEvent".equals(node.getName())||"intermediateCatchEvent".equals(node.getName())) {
 				arrayElement = new IntermediateThrowEvent(id, nodename);
 			}
 

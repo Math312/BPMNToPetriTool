@@ -66,18 +66,41 @@ public class SequenceFlowRule2 extends AbstractRule {
 						nextNode = nodes.get(i);
 					}
  				}
-			
-				if (preNode.getBpmnElem() instanceof ExclusiveGateway) {
-					ExclusiveGateway preBpmnNode = (ExclusiveGateway)preNode.getBpmnElem();
+				if ((preNode.getBpmnElem() instanceof ExclusiveGateway || preNode.getBpmnElem() instanceof EventBasedGateway) && 
+					 (nextNode.getBpmnElem() instanceof ExclusiveGateway || nextNode.getBpmnElem() instanceof EventBasedGateway)) {
+					Transition transition1 = new Transition(preNode.getBpmnId(), name);
+					Place place = new Place("p" + place_id++, id);
+					Transition transition2 = new Transition(nextNode.getBpmnId(), name);
 					
+					Arc arc1 = new Arc(preNode.getLastElem().getId() + " to " + transition1.getId());
+					Arc arc2 = new Arc(transition1.getId() + " to " + place.getId());
+					Arc arc3 = new Arc(place.getId() + " to " + transition2.getId());
+					Arc arc4 = new Arc(transition2.getId() + " to " + nextNode.getFirstElem().getId());
+					
+					result.addNode(transition1);
+					result.addNode(place);
+					result.addNode(transition2);
+					result.addNode(arc1);
+					result.addNode(arc2);
+					result.addNode(arc3);
+					result.addNode(arc4);
+				}
+				else if (preNode.getBpmnElem() instanceof ExclusiveGateway ||
+					preNode.getBpmnElem() instanceof EventBasedGateway) {
+					BpmnElement preBpmnNode;
+					if (preNode.getBpmnElem() instanceof ExclusiveGateway) {
+						preBpmnNode = (ExclusiveGateway) preNode.getBpmnElem();
+					} else {
+						preBpmnNode = (EventBasedGateway) preNode.getBpmnElem();
+					}		
 					/* 对应PPT中Decision中的y1, y2的情况 */
-					if (preBpmnNode.getOutGoingSize() > 1) {
+					if (graphics.getIDbyNode(preBpmnNode.getId())[0].length > 1) {
 						/*	创建petri元素 */
 						Transition transition = new Transition(id, name);
 						Place place = new Place("p" + place_id++, id);
 						Arc arc1 = new Arc(preNode.getLastElem().getId() + " to " + transition.getId());
 						Arc arc2 = new Arc(transition.getId() + " to " + place.getId());
-						Arc arc3 = new Arc(place.getId() + " to " + nextNode.getLastElem().getId());
+						Arc arc3 = new Arc(place.getId() + " to " + nextNode.getFirstElem().getId());
 						
 						/* 添加结点 */
 						result.addNode(transition);
@@ -95,7 +118,7 @@ public class SequenceFlowRule2 extends AbstractRule {
 						result.addLink(arc3.getId(), nextNode.getFirstElem().getId());
 					} 
 					/* 对应PPT中Merge中的y的情况 */
-					else if (preBpmnNode.getOutGoingSize() == 1) {	
+					else if (graphics.getIDbyNode(preBpmnNode.getId())[0].length == 1) {	
 						/* 创建并添加结点 */
 						Arc arc = new Arc(preNode.getLastElem().getId() + " to " + nextNode.getFirstElem().getId());
 						result.addNode(arc);
@@ -105,10 +128,16 @@ public class SequenceFlowRule2 extends AbstractRule {
 						result.addLink(arc.getId(), nextNode.getFirstElem().getId());
 					}
 				}
-				else if(nextNode.getBpmnElem() instanceof ExclusiveGateway) {
+				else if(nextNode.getBpmnElem() instanceof ExclusiveGateway ||
+						nextNode.getBpmnElem() instanceof EventBasedGateway) {
 					/* 对应PPT中Merge中x1 x2的情况 */
-					ExclusiveGateway nextBpmnNode = (ExclusiveGateway)nextNode.getBpmnElem();
-					if (nextBpmnNode.getInComingSize() > 1) {						
+					BpmnElement nextBpmnNode;
+					if (nextNode.getBpmnElem() instanceof ExclusiveGateway) {
+						nextBpmnNode = (ExclusiveGateway) nextNode.getBpmnElem();
+					} else {
+						nextBpmnNode = (EventBasedGateway) nextNode.getBpmnElem();
+					}
+					if (graphics.getIDbyNode(nextBpmnNode.getId())[1].length > 1) {						
 						Transition transition = new Transition(id, name);
 						Place place = new Place("p" + place_id++, id);
 						Arc arc1 = new Arc(preNode.getLastElem().getId() + " to " + place.getId());
@@ -129,7 +158,7 @@ public class SequenceFlowRule2 extends AbstractRule {
 						result.addLink(arc3.getId(), nextNode.getFirstElem().getId());
 					} 
 					/* 对应PPT中Decision中的x的情况 */
-					else if (nextBpmnNode.getInComingSize() == 1) {
+					else if (graphics.getIDbyNode(nextBpmnNode.getId())[1].length == 1) {
 
 						/* 创建并添加Petri结点 */
 						Arc arc = new Arc(preNode.getLastElem().getId() + " to " + nextNode.getFirstElem().getId());

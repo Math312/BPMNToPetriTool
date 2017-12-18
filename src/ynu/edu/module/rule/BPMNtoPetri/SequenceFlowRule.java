@@ -68,7 +68,8 @@ public class SequenceFlowRule extends AbstractRule {
 				}
 				
 				/* ExclusiveGateway 特殊处理 */
-				if (preNode.getBpmnElem() instanceof ExclusiveGateway || nextNode.getBpmnElem() instanceof ExclusiveGateway) {
+				if (preNode.getBpmnElem() instanceof ExclusiveGateway || nextNode.getBpmnElem() instanceof ExclusiveGateway ||
+					preNode.getBpmnElem() instanceof EventBasedGateway || nextNode.getBpmnElem() instanceof EventBasedGateway) {
 					/*	添加结点 */
 					Arc arc = new Arc(preNode.getLastElem().getId() + " to " + nextNode.getFirstElem().getId());
 					result.addNode(arc);

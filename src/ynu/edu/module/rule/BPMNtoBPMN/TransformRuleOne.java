@@ -49,7 +49,7 @@ public class TransformRuleOne extends AbstractRule{
 		
 		graphics.removeNode(startId);
 
-		startEvent = new StartEvent("startId");  //新增一个开始事件
+		startEvent = new StartEvent(startId);  //新增一个开始事件
 		graphics.addNode(startEvent);
 		
 		parallelGateway = new ParallelGateway(Flag.getID());

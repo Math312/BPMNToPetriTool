@@ -12,6 +12,7 @@ import ynu.edu.module.bpmn.BpmnElement;
 import ynu.edu.module.petri.PetriElement;
 import ynu.edu.module.rule.BPMNtoBPMN.Preprocessing;
 import ynu.edu.module.rule.BPMNtoPetri.TransferByRule1;
+import ynu.edu.module.rule.BPMNtoPetri.TransferByRule2;
 import ynu.edu.module.rule.BPMNtoPetri.TransferInterface;
 import ynu.edu.util.analyze.AnalyzeTool;
 import ynu.edu.util.filechange.AddXY;
@@ -58,6 +59,6 @@ public class Main {
 	public static void main(String []  args) 
 	{
 		Main main = new Main(new TransferByRule1());
-		main.transfer("TestBpmn\\case 2.bpmn","TestXml\\case 2.xml");
+		main.transfer("C:\\Users\\lanti\\Desktop\\123\\123\\234\\25_2011-10-24_New Process.bpmn","TestXml\\case 2.xml");
 	}
 }

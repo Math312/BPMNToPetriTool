@@ -16,6 +16,7 @@ public class TransferByRule1 implements TransferInterface{
 		Graphics<PetriElement> g =  new Graphics<>();
 		ParallelGatewayRule parallelGateway = new ParallelGatewayRule();
 		ExclusiveGatewayRule exclusiveGateway = new ExclusiveGatewayRule();
+		EventBasedGatewayRule eventbasedGateway = new EventBasedGatewayRule();
 			
 			if(startEventRule.matches(graphics)) 
 			{
@@ -40,6 +41,9 @@ public class TransferByRule1 implements TransferInterface{
 			if(endEventRule.matches(graphics)) 
 			{
 				endEventRule.transfer(graphics, g);
+			}
+			if (eventbasedGateway.matches(graphics)) {
+				eventbasedGateway.transfer(graphics, g);
 			}
 			if(sequenceFlowRule.matches(graphics)) 
 			{

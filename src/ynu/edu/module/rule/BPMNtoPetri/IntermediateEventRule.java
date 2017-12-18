@@ -37,7 +37,7 @@ public class IntermediateEventRule extends AbstractRule {
 		Hashtable<String, LinkedList<String>> bpmn_nodes = graphics.getIds();
 		LinkedList<String> InterEvent_nodes;
 		if (matches(graphics)) {		//	如果存在中间事件，则返回含有所有序列流id的链表
-			InterEvent_nodes = bpmn_nodes.get(StartEvent.class.getName());
+			InterEvent_nodes = bpmn_nodes.get(IntermediateThrowEvent.class.getName());
 		}
 		else {							//  如果不存在, 则返回null
 			InterEvent_nodes = null;
